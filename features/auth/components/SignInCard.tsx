@@ -14,48 +14,64 @@ import { SignInFlow } from "../types";
 import { useState } from "react";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { TriangleAlert } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import logo from "@/assets/logo.svg";
+import Image from "next/image";
 
-interface SignUpProps {
+interface SignInCardProps {
   setState: (state: SignInFlow) => void;
 }
 
-const SignUpCard = ({ setState }: SignUpProps) => {
+const SignInCard = ({ setState }: SignInCardProps) => {
   const router = useRouter();
   const { signIn } = useAuthActions();
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
 
+  const redirectTo = new URLSearchParams(window.location.search).get(
+    "redirect"
+  );
+
   const onPasswordSignIn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
+
     setPending(true);
-    signIn("password", { name, email, password, flow: "signUp" })
+    signIn("password", { email, password, flow: "signIn" })
       .catch(() => {
-        setError("Something went wrong");
+        setError("Invalid email or password");
       })
       .finally(() => {
         setPending(false);
         router.refresh();
       });
   };
-  const onProviderSignup = (value: "github" | "google") => {
+
+  const onProviderSignIn = (value: "github" | "google") => {
     setPending(true);
     signIn(value).finally(() => {
       setPending(false);
+      router.refresh();
     });
   };
   return (
-    <Card className="w-full h-full p-8">
-      <CardHeader className="pt-0 px-0">
-        <CardTitle>Sign up</CardTitle>
+    <Card className="p-6 shadow-none border-none">
+      <CardHeader className="pt-0 px-0 space-y-2">
+        <Image
+          src={logo}
+          alt="Logo"
+          width={72}
+          height={72}
+          priority
+          className="mx-auto"
+        ></Image>
+        <CardTitle className="text-center text-present-3-bold">
+          Welcome to FusionFootwear
+        </CardTitle>
+        <CardDescription className="text-center">
+          Sign in to continue
+        </CardDescription>
       </CardHeader>
       {!!error && (
         <div className="bg-destructive/15 p-3 rounded-md flex items-center gap-x-2 text-sm mb-6 text-destructive">
@@ -65,15 +81,6 @@ const SignUpCard = ({ setState }: SignUpProps) => {
       )}
       <CardContent className="space-y-5 px-0 pb-0">
         <form className="space-y-2.5" onSubmit={onPasswordSignIn}>
-          <Input
-            disabled={pending}
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-            placeholder="Full Name"
-            required
-          ></Input>
           <Input
             disabled={pending}
             value={email}
@@ -94,55 +101,45 @@ const SignUpCard = ({ setState }: SignUpProps) => {
             type="password"
             required
           ></Input>
-          <Input
-            disabled={pending}
-            value={confirmPassword}
-            onChange={(e) => {
-              setConfirmPassword(e.target.value);
-            }}
-            placeholder="Confirm password"
-            type="password"
-            required
-          ></Input>
           <Button
             type="submit"
             className="w-full"
             size={"lg"}
             disabled={pending}
           >
-            Continue
+            Sign In
           </Button>
         </form>
         <Separator></Separator>
         <div className="flex flex-col gap-y-2.5">
           <Button
             disabled={pending}
-            onClick={() => onProviderSignup("google")}
+            onClick={() => onProviderSignIn("google")}
             variant={"outline"}
             size={"lg"}
-            className="w-full relative"
+            className="w-full relative bg-white border-grey-900"
           >
             <FcGoogle className="size-5 absolute  left-2.5 top-3"></FcGoogle>
-            Sign up with Google
+            Continue with Google
           </Button>
           <Button
             disabled={pending}
-            onClick={() => onProviderSignup("github")}
+            onClick={() => onProviderSignIn("github")}
             variant={"outline"}
             size={"lg"}
-            className="w-full relative"
+            className="w-full relative bg-white border-grey-900"
           >
             <FaGithub className="size-5 absolute left-2.5 top-3"></FaGithub>
-            Sign up with Github
+            Continue with Github
           </Button>
         </div>
         <p className="text-xs text-muted-foreground">
-          Already have an account?{" "}
+          Don't have an account?{" "}
           <span
-            onClick={() => setState("signIn")}
+            onClick={() => setState("signUp")}
             className="text-sky-700 hover:underline cursor-pointer"
           >
-            Sign in
+            Sign up
           </span>
         </p>
       </CardContent>
@@ -150,4 +147,4 @@ const SignUpCard = ({ setState }: SignUpProps) => {
   );
 };
 
-export default SignUpCard;
+export default SignInCard;

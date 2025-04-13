@@ -9,7 +9,7 @@ import NavSearchForm from "./NavSearchForm";
 import { useDepartmentAtom } from "@/features/department/store/useDepartmentAtom";
 import NavSidebar from "./NavSidebar";
 
-function DesktopNav() {
+function TabletNav() {
   const [open, setOpen] = useState(false);
   const [{ department }, setDepartment] = useDepartmentAtom();
 
@@ -17,7 +17,7 @@ function DesktopNav() {
     <>
       <NavSidebar isOpen={open} setOpen={() => setOpen(!open)}></NavSidebar>
 
-      <div className="max-lg:hidden grid grid-cols-[auto_1fr_auto] gap-6 py-3 px-3 border-b-[1px]">
+      <div className="max-md:hidden lg:hidden grid grid-cols-[auto_1fr_auto] gap-6 py-3 px-3 border-b-[1px]">
         <div className="flex items-center gap-4">
           <button className="cursor-pointer">
             <Menu size={32} onClick={() => setOpen(!open)}></Menu>
@@ -44,4 +44,4 @@ function DesktopNav() {
     </>
   );
 }
-export default DesktopNav;
+export default TabletNav;
