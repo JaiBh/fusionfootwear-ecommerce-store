@@ -12,15 +12,9 @@ import Link from "next/link";
 import { useDepartmentAtom } from "@/features/department/store/useDepartmentAtom";
 
 function page() {
-  const [department, setDepartment] = useDepartmentAtom();
-
   return (
     <section className="h-screen grid max-lg:grid-rows-2 lg:grid-cols-2">
-      <Link
-        href={"/mens"}
-        className="relative group overflow-hidden"
-        onClick={() => setDepartment({ department: "Male" })}
-      >
+      <Link href={"/mens"} className="relative group overflow-hidden">
         <h1 className="text-present-1 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-white transition group-hover:scale-[1.2] z-40">
           Men's
         </h1>
@@ -46,11 +40,7 @@ function page() {
           className="max-lg:hidden opacity-80 group-hover:scale-[1.2] transition object-cover"
         ></Image>
       </Link>
-      <Link
-        href={"/womens"}
-        className="relative group overflow-hidden"
-        onClick={() => setDepartment({ department: "Female" })}
-      >
+      <Link href={"/womens"} className="relative group overflow-hidden">
         <h1 className="text-present-1 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-white transition group-hover:scale-[1.2] z-40">
           Women's
         </h1>

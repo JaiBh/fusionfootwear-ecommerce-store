@@ -7,13 +7,18 @@ import { ModeToggle } from "../ui/mode-toggle";
 import Logo from "../Logo";
 import { useDepartmentAtom } from "@/features/department/store/useDepartmentAtom";
 import NavSidebar from "./NavSidebar";
+import { Category } from "@/types";
 
-function MobileNav() {
+function MobileNav({ categories }: { categories: Category[] | undefined }) {
   const [open, setOpen] = useState(false);
   const [{ department }, setDepartment] = useDepartmentAtom();
   return (
     <>
-      <NavSidebar isOpen={open} setOpen={() => setOpen(!open)}></NavSidebar>
+      <NavSidebar
+        isOpen={open}
+        setOpen={() => setOpen(!open)}
+        categories={categories}
+      ></NavSidebar>
 
       <div className="md:hidden flex items-center justify-between py-3 px-3 border-b-[1px]">
         <div className="flex items-center gap-4">

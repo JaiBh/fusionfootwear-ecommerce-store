@@ -8,14 +8,19 @@ import Logo from "../Logo";
 import NavSearchForm from "./NavSearchForm";
 import { useDepartmentAtom } from "@/features/department/store/useDepartmentAtom";
 import NavSidebar from "./NavSidebar";
+import { Category } from "@/types";
 
-function TabletNav() {
+function TabletNav({ categories }: { categories: Category[] | undefined }) {
   const [open, setOpen] = useState(false);
   const [{ department }, setDepartment] = useDepartmentAtom();
 
   return (
     <>
-      <NavSidebar isOpen={open} setOpen={() => setOpen(!open)}></NavSidebar>
+      <NavSidebar
+        isOpen={open}
+        setOpen={() => setOpen(!open)}
+        categories={categories}
+      ></NavSidebar>
 
       <div className="max-md:hidden lg:hidden grid grid-cols-[auto_1fr_auto] gap-6 py-3 px-3 border-b-[1px]">
         <div className="flex items-center gap-4">
@@ -27,7 +32,7 @@ function TabletNav() {
             href={department === "Female" ? "/womens" : "/mens"}
           >
             <Logo></Logo>
-            <h2 className="text-present-4-bold text-primary">FusionFootwear</h2>
+            <h2 className="text-present-2 text-primary">FusionFootwear</h2>
           </Link>
         </div>
         <NavSearchForm></NavSearchForm>

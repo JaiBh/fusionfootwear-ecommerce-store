@@ -13,32 +13,22 @@ import {
 import UserAvatar from "./UserAvatar";
 import Link from "next/link";
 import SidebarLink from "./SidebarLink";
-import getCategories from "@/actions/getCategories";
-import { useEffect, useState } from "react";
 import { Category } from "@/types";
 import { useDepartmentAtom } from "@/features/department/store/useDepartmentAtom";
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import { Separator } from "../ui/separator";
-import { usePathname } from "next/navigation";
+import { useAuthActions } from "@convex-dev/auth/react";
 
 interface NavSidebarProps {
   isOpen: boolean;
   setOpen: () => void;
+  categories: Category[] | undefined;
 }
 
-function NavSidebar({ isOpen, setOpen }: NavSidebarProps) {
+function NavSidebar({ isOpen, setOpen, categories }: NavSidebarProps) {
   const { isAuthenticated } = useConvexAuth();
-  const [categories, setCategories] = useState<Category[]>();
   const [{ department }, setDepartment] = useDepartmentAtom();
-  const pathname = usePathname();
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const res = await getCategories(department);
-      setCategories(res);
-    };
-    fetchCategories();
-  }, [department]);
+  const { signOut } = useAuthActions();
 
   return (
     <aside
@@ -47,15 +37,14 @@ function NavSidebar({ isOpen, setOpen }: NavSidebarProps) {
         !isOpen && "translate-x-[-100%]"
       )}
     >
-      <div className="border-r bg-secondary">
+      <div className="border-r bg-background">
         {/* Department Selector */}
         <div className="grid grid-cols-2 text-center text-present-3-bold bg-border gap-[1px]">
           <Link
             href={"/mens"}
             className={cn(
-              "border-b py-4 bg-secondary",
-              !pathname.includes("womens") &&
-                "border-b-[3px] border-b-foreground"
+              "border-b py-4 bg-background",
+              department === "Male" && "border-b-[3px] border-b-foreground"
             )}
           >
             Men
@@ -63,9 +52,8 @@ function NavSidebar({ isOpen, setOpen }: NavSidebarProps) {
           <Link
             href={"/womens"}
             className={cn(
-              "border-b py-4 bg-secondary",
-              pathname.includes("womens") &&
-                "border-b-[3px] border-b-foreground"
+              "border-b py-4 bg-background",
+              department === "Female" && "border-b-[3px] border-b-foreground"
             )}
           >
             Women
@@ -111,7 +99,7 @@ function NavSidebar({ isOpen, setOpen }: NavSidebarProps) {
               <SidebarLink
                 key={category.id}
                 text={category.name}
-                href={category.name.toLowerCase()}
+                href={`/${department === "Male" ? "mens" : "womens"}/${category.id}`}
               ></SidebarLink>
             ))}
           </ul>
@@ -128,13 +116,25 @@ function NavSidebar({ isOpen, setOpen }: NavSidebarProps) {
                 <FaInstagram></FaInstagram>
               </Link>
             </div>
-            <div className="grid gap-4">
-              <Link
-                href={"/auth"}
-                className="pl-4 text-present-3 underline transition hover:text-primary-60"
-              >
-                Sign in | Join
-              </Link>
+            <div className="flex flex-col gap-4">
+              {isAuthenticated ? (
+                <div className="flex items-center gap-4">
+                  <h3 className="text-present-3-bold">Hi There!</h3>
+                  <button
+                    className="text-grey-500 text-present-3 underline transition hover:text-primary-60 cursor-pointer"
+                    onClick={signOut}
+                  >
+                    Sign out
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  href={"/auth"}
+                  className="w-fit pl-4 text-present-3 text-grey-500 underline transition hover:text-primary-60"
+                >
+                  Sign in | Join
+                </Link>
+              )}
               <Separator></Separator>
               <ul>
                 <Link href={"/orders"}>

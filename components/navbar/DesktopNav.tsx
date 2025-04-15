@@ -1,37 +1,58 @@
 "use client";
 
-import { Heart, Menu, ShoppingCart } from "lucide-react";
+import { Heart, ShoppingCart } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
 import { ModeToggle } from "../ui/mode-toggle";
 import Logo from "../Logo";
 import NavSearchForm from "./NavSearchForm";
 import { useDepartmentAtom } from "@/features/department/store/useDepartmentAtom";
-import NavSidebar from "./NavSidebar";
+import { cn } from "@/lib/utils";
+import AccountDropdown from "./AccountDropdown";
+import { Category } from "@/types";
 
-function DesktopNav() {
-  const [open, setOpen] = useState(false);
+function DesktopNav({ categories }: { categories: Category[] | undefined }) {
   const [{ department }, setDepartment] = useDepartmentAtom();
 
   return (
     <>
-      <NavSidebar isOpen={open} setOpen={() => setOpen(!open)}></NavSidebar>
-
-      <div className="max-lg:hidden grid grid-cols-[auto_1fr_auto] gap-6 py-3 px-3 border-b-[1px]">
-        <div className="flex items-center gap-4">
-          <button className="cursor-pointer">
-            <Menu size={32} onClick={() => setOpen(!open)}></Menu>
-          </button>
+      <div className="max-lg:hidden grid grid-cols-[auto_auto_1fr_auto] gap-6 px-6 max-w-[1315px] mx-auto">
+        <Link
+          className="flex items-center gap-2 py-3"
+          href={department === "Female" ? "/womens" : "/mens"}
+        >
+          <Logo></Logo>
+          <h2 className="text-present-2 text-primary">FusionFootwear</h2>
+        </Link>
+        <div className="grid grid-cols-2 text-center">
           <Link
-            className="flex items-center gap-2"
-            href={department === "Female" ? "/womens" : "/mens"}
+            href={"/mens"}
+            className={cn(
+              "p-4 bg-background transition border-l text-present-3 font-semibold",
+              department === "Male"
+                ? "bg-primary text-white"
+                : "hover:bg-primary-10 dark:hover:bg-secondary"
+            )}
           >
-            <Logo></Logo>
-            <h2 className="text-present-4-bold text-primary">FusionFootwear</h2>
+            Men
+          </Link>
+          <Link
+            href={"/womens"}
+            className={cn(
+              "p-4 bg-background transition border-r text-present-3 font-semibold",
+              department === "Female"
+                ? "bg-primary text-white"
+                : "hover:bg-primary-10 dark:hover:bg-secondary"
+            )}
+          >
+            Women
           </Link>
         </div>
-        <NavSearchForm></NavSearchForm>
-        <div className="flex items-center gap-4">
+        <div className="py-3">
+          <NavSearchForm></NavSearchForm>
+        </div>
+        <div className="flex items-center gap-4 py-3">
+          <AccountDropdown></AccountDropdown>
+
           <Link href={"/saved"} className="hover:text-primary transition">
             <Heart className="size-6"></Heart>
           </Link>
@@ -39,6 +60,21 @@ function DesktopNav() {
             <ShoppingCart className="size-6"></ShoppingCart>
           </Link>
           <ModeToggle></ModeToggle>
+        </div>
+      </div>
+      <div className=" bg-secondary">
+        <div className="max-lg:hidden max-w-[1315px] mx-auto">
+          <ul className="flex items-center">
+            {categories?.map((category) => (
+              <Link
+                key={category.id}
+                href={`/${department === "Female" ? "womens" : "mens"}/${category.id}`}
+                className="p-4 text-present-4 transition hover:bg-primary hover:text-white"
+              >
+                {category.name}
+              </Link>
+            ))}
+          </ul>
         </div>
       </div>
     </>

@@ -9,13 +9,17 @@ export default function ClientDepartmentInitializer({
 }: {
   department: string;
 }) {
-  const [_, setDepartment] = useDepartmentAtom();
+  const [{ department: departmentStore }, setDepartment] = useDepartmentAtom();
 
   useEffect(() => {
     if (department === "mens") {
-      setDepartment({ department: "Male" });
+      if (departmentStore !== "Male") {
+        setDepartment({ department: "Male" });
+      }
     } else if (department === "womens") {
-      setDepartment({ department: "Female" });
+      if (departmentStore !== "Female") {
+        setDepartment({ department: "Female" });
+      }
     }
   }, [department]);
 

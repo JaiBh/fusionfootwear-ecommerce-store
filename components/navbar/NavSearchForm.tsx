@@ -14,7 +14,7 @@ function NavSearchForm() {
 
   return (
     <form
-      className="relative"
+      className="relative h-full"
       onSubmit={(e) => {
         e.preventDefault();
         if (!searchTerm) return;
