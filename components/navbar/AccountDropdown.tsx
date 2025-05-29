@@ -8,6 +8,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 import { useConvexAuth } from "convex/react";
 import {
   FileQuestion,
@@ -18,6 +25,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useAuthActions } from "@convex-dev/auth/react";
+import { cn } from "@/lib/utils";
 
 function AccountDropdown() {
   const { isAuthenticated } = useConvexAuth();
@@ -26,7 +34,7 @@ function AccountDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="hover:text-primary transition cursor-pointer">
-        <User></User>
+        <User className={cn(isAuthenticated && "text-primary")}></User>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel className="py-4 px-10">
@@ -54,7 +62,7 @@ function AccountDropdown() {
           <DropdownMenuItem className="transition hover:text-primary">
             <Link
               href={"/orders"}
-              className="flex items-center gap-4 text-present-3 py-1"
+              className="flex items-center gap-4 text-present-3 py-1 w-full"
             >
               <ShoppingBag></ShoppingBag>
               My Orders
@@ -62,8 +70,8 @@ function AccountDropdown() {
           </DropdownMenuItem>
           <DropdownMenuItem className="transition hover:text-primary">
             <Link
-              href={"/faqs"}
-              className="flex items-center gap-4 text-present-3 py-1"
+              href={"/faq"}
+              className="flex items-center gap-4 text-present-3 py-1 w-full"
             >
               <FileQuestion></FileQuestion>
               FAQs
@@ -72,7 +80,7 @@ function AccountDropdown() {
           <DropdownMenuItem className="transition hover:text-primary">
             <Link
               href={"/about"}
-              className="flex items-center gap-4 text-present-3 py-1"
+              className="flex items-center gap-4 text-present-3 py-1 w-full"
             >
               <Info></Info>
               About Us
@@ -81,7 +89,7 @@ function AccountDropdown() {
           <DropdownMenuItem className="transition hover:text-primary">
             <Link
               href={"/contact"}
-              className="flex items-center gap-4 text-present-3 py-1"
+              className="flex items-center gap-4 text-present-3 py-1 w-full"
             >
               <MessageCircle></MessageCircle>
               Contact Us

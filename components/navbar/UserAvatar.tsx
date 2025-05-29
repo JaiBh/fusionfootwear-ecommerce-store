@@ -9,9 +9,11 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { useAuthActions } from "@convex-dev/auth/react";
+import { useRouter } from "next/navigation";
 
 function UserAvatar({ size }: { size: number }) {
   const user = useGetUser();
+  const router = useRouter();
   const { signOut } = useAuthActions();
 
   if (!user.data?.image) return;
@@ -30,6 +32,7 @@ function UserAvatar({ size }: { size: number }) {
         <DropdownMenuItem
           onClick={() => {
             signOut();
+            router.refresh();
           }}
         >
           Sign out

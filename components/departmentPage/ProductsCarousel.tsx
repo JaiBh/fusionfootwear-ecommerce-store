@@ -10,6 +10,7 @@ import {
 import { Product } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
+import ToggleSaveButton from "../global/ToggleSaveButton";
 
 interface ProductsCarouselProps {
   products: Product[];
@@ -31,13 +32,17 @@ function ProductsCarousel({ products }: ProductsCarouselProps) {
                     src={product.images[0].url}
                     alt={product.name}
                     fill
+                    className="object-cover"
                   ></Image>
                 </div>
-                <div>
-                  <p className="text-present-5-bold">{product.name}</p>
-                  <span className="text-present-5-bold text-primary">
-                    ${product.price}
-                  </span>
+                <div className="flex items-start justify-between">
+                  <div>
+                    <p className="text-present-5-bold">{product.name}</p>
+                    <span className="text-present-5-bold text-primary">
+                      ${Number(product.price).toFixed(2)}
+                    </span>
+                  </div>
+                  <ToggleSaveButton productId={product.id}></ToggleSaveButton>
                 </div>
               </div>
             </Link>

@@ -1,18 +1,26 @@
 "use client";
 
-import { Heart, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { ModeToggle } from "../ui/mode-toggle";
-import Logo from "../Logo";
+import Logo from "../global/Logo";
 import NavSearchForm from "./NavSearchForm";
 import { useDepartmentAtom } from "@/features/department/store/useDepartmentAtom";
 import { cn } from "@/lib/utils";
 import AccountDropdown from "./AccountDropdown";
 import { Category } from "@/types";
+import SavedProductsLink from "./SavedProductsLink";
+import CartLink from "./CartLink";
+import { useEffect, useState } from "react";
 
 function DesktopNav({ categories }: { categories: Category[] | undefined }) {
   const [{ department }, setDepartment] = useDepartmentAtom();
+  const [mounted, setMounted] = useState(false);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return;
   return (
     <>
       <div className="max-lg:hidden grid grid-cols-[auto_auto_1fr_auto] gap-6 px-6 max-w-[1315px] mx-auto">
@@ -52,28 +60,33 @@ function DesktopNav({ categories }: { categories: Category[] | undefined }) {
         </div>
         <div className="flex items-center gap-4 py-3">
           <AccountDropdown></AccountDropdown>
+          <SavedProductsLink></SavedProductsLink>
+          <CartLink></CartLink>
 
-          <Link href={"/saved"} className="hover:text-primary transition">
-            <Heart className="size-6"></Heart>
-          </Link>
-          <Link href={"/cart"} className="hover:text-primary transition">
-            <ShoppingCart className="size-6"></ShoppingCart>
-          </Link>
           <ModeToggle></ModeToggle>
         </div>
       </div>
-      <div className=" bg-secondary">
+      <div
+        className={cn(
+          "bg-secondary",
+          (!categories || categories.length < 1) && "hidden"
+        )}
+      >
         <div className="max-lg:hidden max-w-[1315px] mx-auto">
           <ul className="flex items-center">
-            {categories?.map((category) => (
-              <Link
-                key={category.id}
-                href={`/${department === "Female" ? "womens" : "mens"}/${category.id}`}
-                className="p-4 text-present-4 transition hover:bg-primary hover:text-white"
-              >
-                {category.name}
-              </Link>
-            ))}
+            {categories ? (
+              categories.map((category) => (
+                <Link
+                  key={category.id}
+                  href={`/${department === "Female" ? "womens" : "mens"}/${category.id}`}
+                  className="p-4 text-present-4 transition hover:bg-primary hover:text-white"
+                >
+                  {category.name}
+                </Link>
+              ))
+            ) : (
+              <p className="p-4 text-present-4">Loading...</p>
+            )}
           </ul>
         </div>
       </div>

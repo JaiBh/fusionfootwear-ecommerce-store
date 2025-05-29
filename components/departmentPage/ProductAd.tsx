@@ -8,7 +8,15 @@ interface ProductAdProps {
 }
 
 async function ProductAd({ productId }: ProductAdProps) {
-  const product = await getProduct(productId);
+  let product = undefined;
+
+  try {
+    const resp = await getProduct({ productId });
+    product = resp;
+  } catch {}
+
+  if (product === undefined) return null;
+
   return (
     <div className=" relative aspect-[16_/_10] md:aspect-[16_/_7] max-h-[43rem] bg-primary-60">
       <Image

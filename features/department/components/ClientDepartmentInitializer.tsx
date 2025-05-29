@@ -21,7 +21,7 @@ export default function ClientDepartmentInitializer({
         setDepartment({ department: "Female" });
       }
     }
-  }, [department]);
+  }, [department, departmentStore, setDepartment]);
 
   return null; // doesn't render anything
 }

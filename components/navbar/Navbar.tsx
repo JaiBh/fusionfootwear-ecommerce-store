@@ -9,17 +9,29 @@ import { Category } from "@/types";
 import getCategories from "@/actions/getCategories";
 
 function Navbar() {
-  const [{ department }, setDepartment] = useDepartmentAtom();
+  const [{ department }] = useDepartmentAtom();
 
   const [categories, setCategories] = useState<Category[]>();
 
   useEffect(() => {
+    let mounted = true;
+
     const fetchCategories = async () => {
-      const res = await getCategories(department);
-      setCategories(res);
+      try {
+        const res = await getCategories({ department, isArchived: false });
+        if (mounted) {
+          setCategories(res);
+        }
+      } catch (err) {
+        console.log("Error fetching categories");
+      }
     };
     fetchCategories();
+    return () => {
+      mounted = false;
+    };
   }, [department]);
+
   return (
     <nav className="z-20">
       <MobileNav categories={categories}></MobileNav>

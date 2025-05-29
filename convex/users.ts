@@ -5,16 +5,13 @@ export const get = query({
   args: {},
   handler: async (ctx) => {
     const userId = await getAuthUserId(ctx);
-    if (!userId) {
-      throw new Error("Unauthorized");
-    }
+    if (!userId) return null;
+
     const user = await ctx.db
       .query("users")
       .withIndex("by_id", (q) => q.eq("_id", userId))
       .unique();
-    if (!user) {
-      throw new Error("Unauthorized");
-    }
+    if (!user) return null;
     return { user };
   },
 });

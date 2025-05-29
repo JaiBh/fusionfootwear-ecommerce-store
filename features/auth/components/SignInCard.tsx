@@ -14,7 +14,7 @@ import { SignInFlow } from "../types";
 import { useState } from "react";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { TriangleAlert } from "lucide-react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import logo from "@/assets/logo.svg";
 import Image from "next/image";
 
@@ -29,10 +29,6 @@ const SignInCard = ({ setState }: SignInCardProps) => {
   const [password, setPassword] = useState("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
-
-  const redirectTo = new URLSearchParams(window.location.search).get(
-    "redirect"
-  );
 
   const onPasswordSignIn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

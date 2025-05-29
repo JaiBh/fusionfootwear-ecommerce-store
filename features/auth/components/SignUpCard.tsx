@@ -32,10 +32,6 @@ const SignUpCard = ({ setState }: SignUpProps) => {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
 
-  const redirectTo = new URLSearchParams(window.location.search).get(
-    "redirect"
-  );
-
   const onPasswordSignIn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 

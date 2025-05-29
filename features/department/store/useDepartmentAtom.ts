@@ -1,8 +1,12 @@
-import { atom, useAtom } from "jotai";
+import { useAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 
-const departmentState = atom<{ department: "Male" | "Female" }>({
-  department: "Male",
-});
+const departmentState = atomWithStorage<{ department: "Male" | "Female" }>(
+  "department",
+  {
+    department: "Male",
+  }
+);
 
 export const useDepartmentAtom = () => {
   return useAtom(departmentState);

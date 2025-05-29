@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Poppins, Urbanist } from "next/font/google";
 import "./globals.css";
 import { ConvexClientProvider } from "./providers/ConvexClientProvider";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
+import { Toaster } from "sonner";
+import Modals from "@/components/global/modals/Modals";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 const poppins = Poppins({
@@ -11,9 +12,16 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 
+const urbanist = Urbanist({
+  subsets: ["latin"],
+});
+
 export const metadata = {
   title: "FusionFootwear",
   description: "Sporty, stylish footwear that move with you.",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -24,15 +32,18 @@ export default function RootLayout({
   return (
     <ConvexAuthNextjsServerProvider>
       <html lang="en" suppressHydrationWarning>
-        <body className={`${poppins.variable}  antialiased`}>
+        <body className={`${urbanist.className}  antialiased`}>
           <ConvexClientProvider>
             <ThemeProvider
               attribute="class"
               defaultTheme="system"
               enableSystem
+              enableColorScheme
               disableTransitionOnChange
             >
               {children}
+              <Toaster position="top-center"></Toaster>
+              <Modals></Modals>
             </ThemeProvider>
           </ConvexClientProvider>
         </body>

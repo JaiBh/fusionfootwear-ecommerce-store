@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@tailwind utilities;
 
 @custom-variant dark (&:is(.dark *));
 
@@ -137,57 +138,51 @@ body,
 }
 
 @layer base {
-  body {
-    @apply bg-background text-foreground;
-  }
-
-  .text-present-1 {
-    /* 32px */
-    @apply font-bold text-[2rem] leading-[120%];
-  }
-  .text-present-2 {
-    /* 20px */
-    @apply font-bold text-xl leading-[120%];
-  }
-  .text-present-3 {
-    @apply font-normal text-base leading-[150%];
-  }
-  .text-present-3-bold {
-    /* 16px */
-    @apply font-bold text-base leading-[150%];
-  }
-  .text-present-4 {
-    /* 14px */
-    @apply font-normal text-sm leading-[150%];
-  }
-  .text-present-4-bold {
-    @apply font-bold text-sm leading-[150%];
-  }
-  .text-present-5 {
-    /* 12px */
-    @apply font-normal text-xs leading-[150%];
-  }
-  .text-present-5-bold {
-    @apply font-bold text-xs leading-[150%];
-  }
-  .text-present-6 {
-    /* 10px */
-    @apply font-normal text-[10px] leading-[150%];
-  }
-  .text-present-6-bold {
-    @apply font-bold text-[10px] leading-[150%];
-  }
-
-  .container {
-    @apply w-[90vw] mx-auto max-w-[1315px];
-  }
-}
-
-@layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+  p {
+    @apply text-sm;
+  }
+}
+
+@utility text-present-1 {
+  @apply font-bold text-4xl leading-[120%];
+}
+
+@utility text-present-2 {
+  @apply font-bold text-xl leading-[120%];
+}
+
+@utility text-present-3 {
+  @apply font-normal text-base leading-[150%];
+}
+@utility text-present-3-bold {
+  @apply font-bold text-base leading-[150%];
+}
+@utility text-present-4 {
+  @apply font-normal text-sm leading-[150%];
+}
+@utility text-present-4-bold {
+  @apply font-bold text-sm leading-[150%];
+}
+@utility text-present-5 {
+  @apply font-normal text-xs leading-[150%];
+}
+@utility text-present-5-bold {
+  @apply font-bold text-xs leading-[150%];
+}
+@utility text-present-6 {
+  @apply font-normal text-[10px] leading-[150%];
+}
+@utility text-present-6-bold {
+  @apply font-bold text-[10px] leading-[150%];
+}
+
+@utility container {
+  @apply w-[90vw] mx-auto max-w-[1315px];
 }
