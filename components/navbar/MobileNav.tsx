@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ModeToggle } from "../ui/mode-toggle";
 import Logo from "../global/Logo";
@@ -10,6 +9,7 @@ import { Category } from "@/types";
 import SavedProductsLink from "./SavedProductsLink";
 import CartLink from "./CartLink";
 import { cn } from "@/lib/utils";
+import RouteLink from "../global/RouteLink";
 
 function MobileNav({ categories }: { categories: Category[] | undefined }) {
   const [open, setOpen] = useState(false);
@@ -29,12 +29,16 @@ function MobileNav({ categories }: { categories: Category[] | undefined }) {
             toggleSidebar={() => setOpen(!open)}
             categories={categories}
           ></NavSidebar>
-          <Link
+
+          <RouteLink
             href={department === "Female" ? "/womens" : "/mens"}
-            className={cn(!mounted && "cursor-not-allowed")}
+            className={cn(
+              "flex items-center",
+              !mounted && "cursor-not-allowed"
+            )}
           >
             <Logo></Logo>
-          </Link>
+          </RouteLink>
         </div>
         <div className="flex items-center gap-4">
           <SavedProductsLink></SavedProductsLink>

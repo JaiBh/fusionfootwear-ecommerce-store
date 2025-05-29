@@ -4,9 +4,9 @@ import homeWomensButtonImage from "@/assets/homeWomensButtonImage.jpg";
 import FeaturedProducts from "@/components/departmentPage/FeaturedProducts";
 import Container from "@/components/global/Container";
 import Footer from "@/components/global/Footer";
+import RouteLink from "@/components/global/RouteLink";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import Link from "next/link";
 
 async function HomePage() {
   return (
@@ -18,7 +18,7 @@ async function HomePage() {
             asChild
             className="max-md:w-18 w-26 bg-primary-80 hover:bg-primary-60"
           >
-            <Link href={"/mens"}>Men</Link>
+            <RouteLink href={"/mens"}>Men</RouteLink>
           </Button>
           <h2 className="text-present-3-bold md:text-present-2 text-center">
             <span className="max-md:hidden">Welcome to</span>{" "}
@@ -29,7 +29,7 @@ async function HomePage() {
             asChild
             className="max-md:w-18 w-26 bg-primary-80 hover:bg-primary-60"
           >
-            <Link href={"/womens"}>Women</Link>
+            <RouteLink href={"/womens"}>Women</RouteLink>
           </Button>
         </Container>
       </nav>
@@ -53,7 +53,7 @@ async function HomePage() {
       </section>
       <Container className="pt-12 pb-8 md:py-16 space-y-12">
         <div className="grid gap-4 md:grid-cols-2 md:gap-4">
-          <Link
+          <RouteLink
             href={"/mens"}
             className="relative aspect-[2_/_1] bg-black rounded-2xl overflow-hidden group"
           >
@@ -66,8 +66,8 @@ async function HomePage() {
             <h3 className="text-present-2 absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-white group-hover:scale-120 transition">
               Men
             </h3>
-          </Link>
-          <Link
+          </RouteLink>
+          <RouteLink
             href={"/womens"}
             className="relative aspect-[2_/_1] bg-black rounded-2xl overflow-hidden group"
           >
@@ -80,7 +80,7 @@ async function HomePage() {
             <h3 className="text-present-2 absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-white group-hover:scale-120 transition">
               Women
             </h3>
-          </Link>
+          </RouteLink>
         </div>
         <FeaturedProducts></FeaturedProducts>
       </Container>

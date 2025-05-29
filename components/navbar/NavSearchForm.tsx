@@ -2,12 +2,16 @@
 
 import { Search } from "lucide-react";
 import { Input } from "../ui/input";
-import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useTransition } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useLoadingAtom } from "@/features/global/store/useLoadingAtom";
 
 function NavSearchForm() {
   const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
+  const [_, setLoadingAtom] = useLoadingAtom();
   const router = useRouter();
+  const pathname = usePathname();
   const [searchTerm, setSearchTerm] = useState(
     searchParams.get("search") || ""
   );
@@ -18,7 +22,15 @@ function NavSearchForm() {
       onSubmit={(e) => {
         e.preventDefault();
         if (!searchTerm) return;
-        router.push(`/search?search=${searchTerm}`);
+        if (pathname !== "/search") {
+          console.log("HELLO");
+          setLoadingAtom({ isLoading: true });
+          startTransition(() => {
+            router.push(`/search?search=${searchTerm}`);
+          });
+        } else {
+          router.push(`/search?search=${searchTerm}`);
+        }
       }}
     >
       <Search

@@ -31,6 +31,8 @@ import {
 } from "@/components/ui/sheet";
 import { ScrollArea } from "../ui/scroll-area";
 import { useEffect, useState } from "react";
+import RouteLink from "../global/RouteLink";
+import { toast } from "sonner";
 
 interface NavSidebarProps {
   toggleSidebar: () => void;
@@ -42,15 +44,22 @@ function NavSidebar({ toggleSidebar, categories }: NavSidebarProps) {
   const router = useRouter();
   const [{ department }] = useDepartmentAtom();
   const { signOut } = useAuthActions();
+  const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  if (!mounted) return;
+
   return (
-    <Sheet>
-      <SheetTrigger className="cursor-pointer" disabled={!mounted}>
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger
+        className="cursor-pointer"
+        disabled={!mounted}
+        onClick={() => setOpen(true)}
+      >
         <Menu size={32}></Menu>
       </SheetTrigger>
       <SheetContent customClose side="left">
@@ -60,26 +69,32 @@ function NavSidebar({ toggleSidebar, categories }: NavSidebarProps) {
         <ScrollArea className="h-full">
           <div className="bg-background">
             {/* Department Selector */}
-            <div className="grid grid-cols-2 text-center text-present-3-bold bg-border gap-[1px]">
-              <Link
+            <div className="grid grid-cols-2 text-center text-present-3-bold">
+              <RouteLink
                 href={"/mens"}
                 className={cn(
-                  "border-b py-4 bg-background",
-                  department === "Male" && "border-b-[3px] border-b-foreground"
+                  "block border-b-[3px] py-4 bg-card opacity-70 transition",
+                  department === "Male"
+                    ? " border-b-primary text-primary opacity-100"
+                    : "hover:border-b-primary-80 hover:text-primary-80"
                 )}
+                onClick={() => setOpen(false)}
               >
                 Men
-              </Link>
-              <Link
+              </RouteLink>
+
+              <RouteLink
                 href={"/womens"}
                 className={cn(
-                  "border-b py-4 bg-background",
-                  department === "Female" &&
-                    "border-b-[3px] border-b-foreground"
+                  "block border-b-[3px] py-4 bg-card opacity-70 transition",
+                  department === "Female"
+                    ? "border-b-primary text-primary opacity-100"
+                    : "hover:border-b-primary-80 hover:text-primary-80"
                 )}
+                onClick={() => setOpen(false)}
               >
                 Women
-              </Link>
+              </RouteLink>
             </div>
 
             <div className="px-4 py-6 grid gap-10 grid-rows-[auto_1fr_auto] relative">
@@ -101,13 +116,14 @@ function NavSidebar({ toggleSidebar, categories }: NavSidebarProps) {
                     <UserAvatar size={48}></UserAvatar>
                   </div>
                 ) : (
-                  <Link
+                  <RouteLink
                     href={`/auth`}
                     className="text-present-4-bold flex items-center gap-1 justify-self-center transition hover:text-primary"
+                    onClick={() => setOpen(false)}
                   >
                     <span>Sign in</span>
                     <ArrowRight size={16}></ArrowRight>
-                  </Link>
+                  </RouteLink>
                 )}
               </div>
               {/* Category Links */}
@@ -116,6 +132,7 @@ function NavSidebar({ toggleSidebar, categories }: NavSidebarProps) {
                   onClick={toggleSidebar}
                   text={"Home"}
                   href={department === "Female" ? "/womens" : "/mens"}
+                  setOpen={setOpen}
                 ></SidebarLink>
                 {categories?.map((category) => (
                   <SidebarLink
@@ -123,6 +140,7 @@ function NavSidebar({ toggleSidebar, categories }: NavSidebarProps) {
                     key={category.id}
                     text={category.name}
                     href={`/${department === "Male" ? "mens" : "womens"}/${category.id}`}
+                    setOpen={setOpen}
                   ></SidebarLink>
                 ))}
               </ul>
@@ -147,6 +165,7 @@ function NavSidebar({ toggleSidebar, categories }: NavSidebarProps) {
                         className="text-grey-500 text-present-3 underline transition hover:text-primary-60 cursor-pointer"
                         onClick={() => {
                           signOut();
+                          toast.success("You have been signed out");
                           router.refresh();
                         }}
                       >
@@ -154,39 +173,58 @@ function NavSidebar({ toggleSidebar, categories }: NavSidebarProps) {
                       </button>
                     </div>
                   ) : (
-                    <Link
+                    <RouteLink
                       href={"/auth"}
                       className="w-fit pl-4 text-present-3 text-grey-500 underline transition hover:text-primary-60"
                     >
                       Sign in | Join
-                    </Link>
+                    </RouteLink>
                   )}
                   <Separator></Separator>
                   <ul>
-                    <Link href={"/orders"}>
+                    <RouteLink
+                      href={"/orders"}
+                      onClick={() => setOpen(false)}
+                      className="block w-full"
+                    >
                       <li className="py-4 transition hover:text-primary-80 pl-4 flex items-center gap-3">
                         <ShoppingBag></ShoppingBag>
                         My Orders
                       </li>
-                    </Link>
-                    <Link href={"/faq"}>
+                    </RouteLink>
+
+                    <RouteLink
+                      href={"/faq"}
+                      onClick={() => setOpen(false)}
+                      className="block w-full"
+                    >
                       <li className="py-4 transition hover:text-primary-80 pl-4 flex items-center gap-3">
                         <FileQuestion></FileQuestion>
                         FAQs
                       </li>
-                    </Link>
-                    <Link href={"/about"}>
+                    </RouteLink>
+
+                    <RouteLink
+                      href={"/about"}
+                      onClick={() => setOpen(false)}
+                      className="block w-full"
+                    >
                       <li className="py-4 transition hover:text-primary-80 pl-4 flex items-center gap-3">
                         <Info></Info>
                         About us
                       </li>
-                    </Link>
-                    <Link href={"/contact"}>
+                    </RouteLink>
+
+                    <RouteLink
+                      href={"/contact"}
+                      onClick={() => setOpen(false)}
+                      className="block w-full"
+                    >
                       <li className="py-4 transition hover:text-primary-80 pl-4 flex items-center gap-3">
                         <MessageCircle></MessageCircle>
                         Contact Us
                       </li>
-                    </Link>
+                    </RouteLink>
                   </ul>
                   <Separator></Separator>
                 </div>

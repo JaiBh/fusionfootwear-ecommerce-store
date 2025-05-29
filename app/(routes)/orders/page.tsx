@@ -3,12 +3,12 @@
 import getOrders from "@/actions/getOrders";
 import Container from "@/components/global/Container";
 import FullScreenLoading from "@/components/global/FullScreenLoading";
+import RouteLink from "@/components/global/RouteLink";
 import SingleOrder from "@/components/orders/SingleOrder";
 import { Button } from "@/components/ui/button";
 import { useGetUser } from "@/features/auth/api/useGetUser";
 import { useDepartmentAtom } from "@/features/department/store/useDepartmentAtom";
 import { Order } from "@/types";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -27,7 +27,7 @@ function OrdersPage() {
           throw new Error("No user id was received.");
         }
         setLoading(true);
-        const resp = await getOrders({ userId: user._id, isPaid: true });
+        const resp = await getOrders({ userId: user._id, isPaid: false });
         if (mounted) {
           setOrders(resp);
         }
@@ -61,9 +61,9 @@ function OrdersPage() {
             order appear here
           </p>
           <Button asChild>
-            <Link href={`/${department === "Male" ? "mens" : "womens"}`}>
+            <RouteLink href={`/${department === "Male" ? "mens" : "womens"}`}>
               Continue Shopping
-            </Link>
+            </RouteLink>
           </Button>
         </div>
       </div>

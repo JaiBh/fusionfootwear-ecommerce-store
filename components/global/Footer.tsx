@@ -2,6 +2,7 @@ import Link from "next/link";
 import Logo from "./Logo";
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import Container from "./Container";
+import RouteLink from "./RouteLink";
 
 function Footer() {
   const year = new Date().getFullYear();
@@ -12,17 +13,23 @@ function Footer() {
         <div className="md:hidden flex items-center justify-between">
           <p className="text-present-5">&copy;{year} FusionFootwear</p>
           <div className="flex items-center gap-3 text-present-5">
-            <Link href={"/contact"} className="transition hover:text-primary">
+            <RouteLink
+              href={"/contact"}
+              className="transition hover:text-primary"
+            >
               Contact us
-            </Link>
+            </RouteLink>
             /
-            <Link href={"/about"} className="transition hover:text-primary">
+            <RouteLink
+              href={"/about"}
+              className="transition hover:text-primary"
+            >
               About us
-            </Link>
+            </RouteLink>
             /
-            <Link href={"/faq"} className="transition hover:text-primary">
+            <RouteLink href={"/faq"} className="transition hover:text-primary">
               FAQs
-            </Link>
+            </RouteLink>
           </div>
         </div>
 
@@ -30,7 +37,9 @@ function Footer() {
         <div className="max-md:hidden flex items-center justify-between">
           <div className="space-y-4 max-w-[220px]">
             <div className="flex items-center gap-2">
-              <Logo></Logo>
+              <RouteLink href="/">
+                <Logo></Logo>
+              </RouteLink>
               <h2 className="text-present-2 text-primary">FusionFootwear</h2>
             </div>
             <p className="text-present-5">
@@ -58,12 +67,12 @@ function Footer() {
             </div>
           </div>
           <div className="space-y-4 max-w-[220px]">
-            <Link
+            <RouteLink
               href={"/contact"}
               className="text-present-2 transition hover:text-primary"
             >
               Contact Us
-            </Link>
+            </RouteLink>
             <p className="text-present-5">
               E-Comm , 4578<br></br>
               Marmora Road,<br></br>

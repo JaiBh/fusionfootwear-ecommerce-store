@@ -5,6 +5,7 @@ import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 import { Toaster } from "sonner";
 import Modals from "@/components/global/modals/Modals";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import LoadingClientWrapper from "@/components/global/LoadingClientWrapper";
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -35,7 +36,7 @@ export default function RootLayout({
               enableColorScheme
               disableTransitionOnChange
             >
-              {children}
+              <LoadingClientWrapper>{children}</LoadingClientWrapper>
               <Toaster position="top-center"></Toaster>
               <Modals></Modals>
             </ThemeProvider>

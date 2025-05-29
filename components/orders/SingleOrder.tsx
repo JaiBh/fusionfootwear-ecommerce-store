@@ -1,8 +1,8 @@
 import { Order, OrderItem } from "@/types";
 import Image from "next/image";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
-import Link from "next/link";
 import { format } from "date-fns";
+import RouteLink from "../global/RouteLink";
 
 interface FormattedOrderItem extends OrderItem {
   quantity: number;
@@ -41,7 +41,7 @@ function SingleOrder({ order }: SingleOrderProps) {
         <div className="flex gap-3">
           {formattedOrderItems.map((orderItem) => {
             return (
-              <Link
+              <RouteLink
                 key={orderItem.id}
                 href={`/product/${orderItem.productId}`}
                 className="relative aspect-square h-24"
@@ -59,7 +59,7 @@ function SingleOrder({ order }: SingleOrderProps) {
                     No Image Available
                   </div>
                 )}
-              </Link>
+              </RouteLink>
             );
           })}
         </div>

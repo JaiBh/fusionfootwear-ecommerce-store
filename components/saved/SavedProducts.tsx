@@ -7,13 +7,13 @@ import { useLocalSavedProductsAtom } from "@/features/saved/store/useLocalSavedP
 import { Product } from "@/types";
 import { useEffect, useState, MouseEvent } from "react";
 import { Card, CardContent, CardHeader } from "../ui/card";
-import Link from "next/link";
 import Image from "next/image";
 import deleteSavedProduct from "@/actions/deleteSavedProduct";
 import FullScreenLoading from "../global/FullScreenLoading";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 import { Trash } from "lucide-react";
+import RouteLink from "../global/RouteLink";
 
 function SavedProducts() {
   const { data: user, isLoading: userIsLoading } = useGetUser();
@@ -105,7 +105,7 @@ function SavedProducts() {
           all your devices.
         </p>
         <Button variant={"default"} className="w-full cursor-pointer" asChild>
-          <Link href={"/auth"}>SIGN IN</Link>
+          <RouteLink href={"/auth"}>SIGN IN</RouteLink>
         </Button>
       </div>
     );
@@ -120,7 +120,7 @@ function SavedProducts() {
           they'll appear here.
         </p>
         <Button variant={"default"} className="w-full cursor-pointer" asChild>
-          <Link href={"/"}>START BROWSING</Link>
+          <RouteLink href={"/"}>START BROWSING</RouteLink>
         </Button>
       </div>
     );
@@ -130,7 +130,7 @@ function SavedProducts() {
       {savedProducts.map((product) => {
         const { id, name, images, price } = product;
         return (
-          <Link href={`/product/${id}`} target="_blank" key={id}>
+          <RouteLink href={`/product/${id}`} key={id}>
             <Card className="h-full">
               <CardHeader className="relative aspect-square">
                 <Image
@@ -165,7 +165,7 @@ function SavedProducts() {
                 </p>
               </CardContent>
             </Card>
-          </Link>
+          </RouteLink>
         );
       })}
     </section>

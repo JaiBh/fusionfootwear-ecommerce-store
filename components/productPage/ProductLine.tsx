@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 import { Product, ProductLine as ProductLineType } from "@/types";
 import Image from "next/image";
-import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
+import RouteLink from "../global/RouteLink";
 
 interface ProductLineProps {
   productLine: ProductLineType;
@@ -48,7 +48,7 @@ function ProductLine({ productLine, setColor, product }: ProductLineProps) {
             );
           }
           return (
-            <Link
+            <RouteLink
               href={`/product/${item.id}`}
               key={item.id}
               className={cn(
@@ -77,7 +77,7 @@ function ProductLine({ productLine, setColor, product }: ProductLineProps) {
                   No Image
                 </div>
               )}
-            </Link>
+            </RouteLink>
           );
         })}
     </div>

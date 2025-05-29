@@ -5,7 +5,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Heart } from "lucide-react";
-import Link from "next/link";
+import RouteLink from "../global/RouteLink";
 
 function SavedProductsLink() {
   return (
@@ -13,9 +13,12 @@ function SavedProductsLink() {
       <Tooltip>
         <TooltipTrigger>
           {" "}
-          <Link href={"/saved"} className="hover:text-primary transition">
+          <RouteLink
+            href={"/saved"}
+            className="hover:text-primary transition p-0 m-0 flex items-center"
+          >
             <Heart className="size-6"></Heart>
-          </Link>
+          </RouteLink>
         </TooltipTrigger>
         <TooltipContent>
           <p>Saved Products</p>

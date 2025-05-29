@@ -2,8 +2,8 @@ import { Product } from "@/types";
 import { SetStateAction } from "react";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import Image from "next/image";
-import Link from "next/link";
 import ToggleSaveButton from "../global/ToggleSaveButton";
+import RouteLink from "../global/RouteLink";
 
 interface ProductCardProps {
   product: Product;
@@ -17,7 +17,7 @@ function ProductCard({
   setProductHover,
 }: ProductCardProps) {
   return (
-    <Link href={`/product/${product.id}`}>
+    <RouteLink href={`/product/${product.id}`}>
       <Card className="h-full">
         <CardHeader className="relative aspect-square">
           {product.images?.length ? (
@@ -50,7 +50,7 @@ function ProductCard({
           </p>
         </CardContent>
       </Card>
-    </Link>
+    </RouteLink>
   );
 }
 export default ProductCard;

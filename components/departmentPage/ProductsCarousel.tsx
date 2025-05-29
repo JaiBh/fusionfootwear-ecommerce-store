@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/carousel";
 import { Product } from "@/types";
 import Image from "next/image";
-import Link from "next/link";
 import ToggleSaveButton from "../global/ToggleSaveButton";
+import RouteLink from "../global/RouteLink";
 
 interface ProductsCarouselProps {
   products: Product[];
@@ -25,7 +25,10 @@ function ProductsCarousel({ products }: ProductsCarouselProps) {
             key={product.id}
             className="basis-[65%] md:basis-[40%] lg:basis-[30%] h-full"
           >
-            <Link href={`/product/${product.id}`}>
+            <RouteLink
+              href={`/product/${product.id}`}
+              className="w-full text-start"
+            >
               <div className="border p-6 space-y-3">
                 <div className="relative aspect-square w-full">
                   <Image
@@ -47,7 +50,7 @@ function ProductsCarousel({ products }: ProductsCarouselProps) {
                   <ToggleSaveButton productId={product.id}></ToggleSaveButton>
                 </div>
               </div>
-            </Link>
+            </RouteLink>
           </CarouselItem>
         ))}
       </CarouselContent>

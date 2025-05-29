@@ -1,7 +1,7 @@
 import getProduct from "@/actions/getProduct";
 import Image from "next/image";
-import Link from "next/link";
 import { Button } from "../ui/button";
+import RouteLink from "../global/RouteLink";
 
 interface ProductAdProps {
   productId: string;
@@ -36,12 +36,12 @@ async function ProductAd({ productId }: ProductAdProps) {
               Performance and design. Taken right to the edge.
             </p>
             <Button variant={"link"} asChild>
-              <Link
+              <RouteLink
                 href={`/product/${product.id}`}
                 className="text-white text-present-3-bold pl-0 underline hover:text-primary lg:text-xl"
               >
                 Shop Now
-              </Link>
+              </RouteLink>
             </Button>
           </div>
         </div>

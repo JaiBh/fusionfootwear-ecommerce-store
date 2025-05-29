@@ -10,11 +10,11 @@ import { Button } from "@/components/ui/button";
 import { useCartAtom } from "@/features/cart/store/useCartAtom";
 import { useDepartmentAtom } from "@/features/department/store/useDepartmentAtom";
 import { CartItem } from "@/types";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import CartInfo from "@/components/cart/CartInfo";
 import CheckoutButton from "@/components/cart/CheckoutButton";
+import RouteLink from "@/components/global/RouteLink";
 
 function CartPage() {
   const [cartItems, setCartItems] = useCartAtom();
@@ -120,9 +120,9 @@ function CartPage() {
           <h2 className="text-present-2">Your cart is empty</h2>
           <p>Browse the store and add items to your cart.</p>
           <Button variant={"default"} className="w-full cursor-pointer" asChild>
-            <Link href={`/${department === "Female" ? "womens" : "mens"}`}>
+            <RouteLink href={`/${department === "Female" ? "womens" : "mens"}`}>
               Continue Shopping
-            </Link>
+            </RouteLink>
           </Button>
         </div>
       </div>

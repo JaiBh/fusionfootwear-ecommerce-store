@@ -8,9 +8,8 @@ const isPublicPage = createRouteMatcher(["/auth"]);
 const isProtectedPage = createRouteMatcher(["/orders"]);
 
 export default convexAuthNextjsMiddleware(async (request, { convexAuth }) => {
-  console.log(request.url);
   if (isPublicPage(request) && (await convexAuth.isAuthenticated())) {
-    return nextjsMiddlewareRedirect(request, "/saved");
+    return nextjsMiddlewareRedirect(request, "/");
   }
   if (isProtectedPage(request) && !(await convexAuth.isAuthenticated())) {
     return nextjsMiddlewareRedirect(request, "/auth");

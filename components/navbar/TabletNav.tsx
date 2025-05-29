@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ModeToggle } from "../ui/mode-toggle";
 import Logo from "../global/Logo";
@@ -11,6 +10,7 @@ import { Category } from "@/types";
 import SavedProductsLink from "./SavedProductsLink";
 import CartLink from "./CartLink";
 import { cn } from "@/lib/utils";
+import RouteLink from "../global/RouteLink";
 
 function TabletNav({ categories }: { categories: Category[] | undefined }) {
   const [open, setOpen] = useState(false);
@@ -29,7 +29,7 @@ function TabletNav({ categories }: { categories: Category[] | undefined }) {
             toggleSidebar={() => setOpen(!open)}
             categories={categories}
           ></NavSidebar>
-          <Link
+          <RouteLink
             className={cn(
               "flex items-center gap-2",
               !mounted && "cursor-not-allowed"
@@ -38,7 +38,7 @@ function TabletNav({ categories }: { categories: Category[] | undefined }) {
           >
             <Logo></Logo>
             <h2 className="text-present-2 text-primary">FusionFootwear</h2>
-          </Link>
+          </RouteLink>
         </div>
         <NavSearchForm></NavSearchForm>
         <div className="flex items-center gap-4">

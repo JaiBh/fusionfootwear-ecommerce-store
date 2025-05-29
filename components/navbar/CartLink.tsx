@@ -5,7 +5,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { ShoppingCart } from "lucide-react";
-import Link from "next/link";
+import RouteLink from "../global/RouteLink";
 
 function CartLink() {
   return (
@@ -13,9 +13,12 @@ function CartLink() {
       <Tooltip>
         <TooltipTrigger>
           {" "}
-          <Link href={"/cart"} className="hover:text-primary transition">
+          <RouteLink
+            href={"/cart"}
+            className="hover:text-primary transition  flex items-center"
+          >
             <ShoppingCart className="size-6"></ShoppingCart>
-          </Link>
+          </RouteLink>
         </TooltipTrigger>
         <TooltipContent>
           <p>Cart</p>

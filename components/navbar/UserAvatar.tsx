@@ -10,28 +10,44 @@ import {
 } from "../ui/dropdown-menu";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 function UserAvatar({ size }: { size: number }) {
-  const user = useGetUser();
+  const { data: user, isLoading } = useGetUser();
   const router = useRouter();
   const { signOut } = useAuthActions();
 
-  if (!user.data?.image) return;
+  if (isLoading) return;
+
+  if (!user) return;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="cursor-pointer">
-        <Image
-          src={user.data?.image}
-          alt={"User Avatar"}
-          width={size}
-          height={size}
-          className="object-cover rounded-[50%]"
-        ></Image>
+        {user.image ? (
+          <Image
+            src={user.image}
+            alt={"User Avatar"}
+            width={size}
+            height={size}
+            className="object-cover rounded-[50%]"
+          ></Image>
+        ) : (
+          <div
+            className={cn(
+              `size-[${size}px] rounded-[50%] flex items-center justify-center bg-primary-60`
+            )}
+          >
+            {user.email?.charAt(0).toUpperCase()}
+          </div>
+        )}
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem
           onClick={() => {
             signOut();
+            toast.success("You have been signed out");
             router.refresh();
           }}
         >
