@@ -112,6 +112,7 @@ function ProductsList({
     }
     return updatedProducts;
   }, [
+    searchEnabled,
     colorIds,
     sizeIds,
     sortBy,
@@ -158,7 +159,7 @@ function ProductsList({
     return () => {
       mounted = false;
     };
-  }, [department, categoryId, searchTerm]);
+  }, [department, categoryId, searchTerm, setProductsAtom, setSelectedFilters]);
 
   if (loading) {
     return <FullScreenLoading></FullScreenLoading>;

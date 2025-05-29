@@ -12,7 +12,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-function page() {
+function OrdersPage() {
   const { data: user, isLoading: userIsLoading } = useGetUser();
   const [{ department }] = useDepartmentAtom();
   const [orders, setOrders] = useState<Order[]>([]);
@@ -82,4 +82,4 @@ function page() {
     </Container>
   );
 }
-export default page;
+export default OrdersPage;

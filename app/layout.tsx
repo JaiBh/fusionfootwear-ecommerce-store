@@ -1,16 +1,10 @@
-import { Poppins, Urbanist } from "next/font/google";
+import { Urbanist } from "next/font/google";
 import "./globals.css";
 import { ConvexClientProvider } from "./providers/ConvexClientProvider";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 import { Toaster } from "sonner";
 import Modals from "@/components/global/modals/Modals";
 import { ThemeProvider } from "@/components/ThemeProvider";
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
-});
 
 const urbanist = Urbanist({
   subsets: ["latin"],

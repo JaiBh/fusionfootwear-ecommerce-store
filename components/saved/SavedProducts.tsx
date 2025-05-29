@@ -90,7 +90,7 @@ function SavedProducts() {
     return () => {
       mounted = false;
     };
-  }, [user, userIsLoading]);
+  }, [user, userIsLoading, localSavedProductsIds]);
 
   if (isLoading) {
     return <FullScreenLoading></FullScreenLoading>;

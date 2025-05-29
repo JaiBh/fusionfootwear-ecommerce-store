@@ -1,4 +1,3 @@
-import getProducts from "@/actions/getProducts";
 import homeHero from "@/assets/homeHero.jpg";
 import homeMensButtonImage from "@/assets/homeMensButtonImage.jpg";
 import homeWomensButtonImage from "@/assets/homeWomensButtonImage.jpg";
@@ -9,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
-async function page() {
+async function HomePage() {
   return (
     <>
       <nav className="bg-card">
@@ -88,4 +87,4 @@ async function page() {
     </>
   );
 }
-export default page;
+export default HomePage;

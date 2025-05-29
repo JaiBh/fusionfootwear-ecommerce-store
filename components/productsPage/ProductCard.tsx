@@ -1,5 +1,5 @@
 import { Product } from "@/types";
-import { SetStateAction, useEffect, useState } from "react";
+import { SetStateAction } from "react";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import Image from "next/image";
 import Link from "next/link";

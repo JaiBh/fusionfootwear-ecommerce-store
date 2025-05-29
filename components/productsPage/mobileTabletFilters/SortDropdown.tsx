@@ -9,7 +9,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { Product } from "@/types";
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface SortDropdownProps {

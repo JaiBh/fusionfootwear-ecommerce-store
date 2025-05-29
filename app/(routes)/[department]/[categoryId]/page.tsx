@@ -8,7 +8,7 @@ import MobileTabletFilters from "@/components/productsPage/mobileTabletFilters/M
 import DesktopFilters from "@/components/productsPage/desktopFilters/DesktopFilters";
 import { Category } from "@/types";
 
-async function page({
+async function CategoryPage({
   params,
 }: {
   params: Promise<{ department: "mens" | "womens"; categoryId: string }>;
@@ -79,4 +79,4 @@ async function page({
     </>
   );
 }
-export default page;
+export default CategoryPage;

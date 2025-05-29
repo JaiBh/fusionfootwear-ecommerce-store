@@ -23,7 +23,7 @@ function Navbar() {
           setCategories(res);
         }
       } catch (err) {
-        console.log("Error fetching categories");
+        console.log("Error fetching categories", err);
       }
     };
     fetchCategories();

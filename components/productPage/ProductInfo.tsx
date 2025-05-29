@@ -22,8 +22,7 @@ interface ProductInfoProps {
 
 function ProductInfo({ product, sizes, productLine }: ProductInfoProps) {
   const { data: user, isLoading: userIsLoading } = useGetUser();
-  const [{ localSavedProductsIds }, setLocalSavedProducts] =
-    useLocalSavedProductsAtom();
+  const [{ localSavedProductsIds }] = useLocalSavedProductsAtom();
   const [cartItems, setCartItems] = useCartAtom();
   const [{ department }, setDepartment] = useDepartmentAtom();
 
@@ -121,7 +120,15 @@ function ProductInfo({ product, sizes, productLine }: ProductInfoProps) {
     return () => {
       isMounted = false;
     };
-  }, [user, userIsLoading, product.id, localSavedProductsIds, department]);
+  }, [
+    user,
+    userIsLoading,
+    product.id,
+    localSavedProductsIds,
+    department,
+    product.department,
+    setDepartment,
+  ]);
 
   return (
     <div className="max-md:w-[90vw] max-md:mx-auto space-y-4">

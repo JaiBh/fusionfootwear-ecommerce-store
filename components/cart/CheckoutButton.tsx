@@ -55,7 +55,7 @@ function CheckoutButton({ formattedCartItems }: CheckoutButtonProps) {
       );
       pass = !check.includes(false);
     } catch (err) {
-      console.log("Error during final stock check");
+      console.log("Error during final stock check", err);
       pass = false;
     } finally {
       return { pass, unitIds };
@@ -83,7 +83,7 @@ function CheckoutButton({ formattedCartItems }: CheckoutButtonProps) {
       });
       window.location = resp.url;
     } catch (err) {
-      console.log(err);
+      console.log("Error checking out", err);
       toast.error(
         "There was an issue checking out this cart. Please try again later."
       );
@@ -104,7 +104,7 @@ function CheckoutButton({ formattedCartItems }: CheckoutButtonProps) {
     if (searchParams.get("canceled")) {
       toast.error("Something went wrong.");
     }
-  }, [searchParams, removeAll]);
+  }, [searchParams]);
 
   return (
     <Button

@@ -6,7 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-function page() {
+function FaqPage() {
   return (
     <Container className="mb-8">
       <h2 className="text-present-2 md:text-present-2 my-6 md:my-8 text-center">
@@ -67,4 +67,4 @@ function page() {
     </Container>
   );
 }
-export default page;
+export default FaqPage;

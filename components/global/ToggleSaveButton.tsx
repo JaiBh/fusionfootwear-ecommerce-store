@@ -41,7 +41,7 @@ function ToggleSaveButton({ productId, className }: ToggleSaveButtonProps) {
         if (!mounted) return;
         setIsSaved(saved);
       } catch (err) {
-        console.log(err);
+        console.log("Error checking if product is saved.", err);
       } finally {
         if (!mounted) return;
       }
@@ -65,7 +65,7 @@ function ToggleSaveButton({ productId, className }: ToggleSaveButtonProps) {
         setIsSaved(!prev);
         try {
           await toggleSaveProduct();
-        } catch (err) {
+        } catch {
           setIsSaved(prev);
           //   error dealt with in toggleSaveProduct()
         }

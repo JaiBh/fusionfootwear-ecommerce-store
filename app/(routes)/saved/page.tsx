@@ -1,7 +1,7 @@
 import Container from "@/components/global/Container";
 import SavedProducts from "@/components/saved/SavedProducts";
 
-function page() {
+function SavedProductsPage() {
   return (
     <Container>
       <h1 className="text-present-2 md:text-present-1 text-center my-6 md:my-10">
@@ -11,4 +11,4 @@ function page() {
     </Container>
   );
 }
-export default page;
+export default SavedProductsPage;

@@ -6,7 +6,6 @@ import { Label } from "../../ui/label";
 import { Input } from "../../ui/input";
 import { Button } from "@/components/ui/button";
 import { Dispatch, SetStateAction } from "react";
-import { Product } from "@/types";
 
 interface PricePopoverProps {
   filterWidth: number | undefined;

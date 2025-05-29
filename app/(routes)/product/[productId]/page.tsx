@@ -6,7 +6,11 @@ import ProductBreadCrumb from "@/components/productPage/ProductBreadCrumb";
 import ProductGallery from "@/components/productPage/ProductGallery";
 import ProductInfo from "@/components/productPage/ProductInfo";
 
-async function page({ params }: { params: Promise<{ productId: string }> }) {
+async function ProductPage({
+  params,
+}: {
+  params: Promise<{ productId: string }>;
+}) {
   try {
     const { productId } = await params;
     const product = await getProduct({ productId, isArchived: false });
@@ -44,4 +48,4 @@ async function page({ params }: { params: Promise<{ productId: string }> }) {
     );
   }
 }
-export default page;
+export default ProductPage;

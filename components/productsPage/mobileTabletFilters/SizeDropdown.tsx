@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { Product, Size } from "@/types";
-import { RefObject } from "react";
 
 interface SizeDropdownProps {
   filterWidth: number | undefined;

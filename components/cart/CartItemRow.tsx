@@ -71,7 +71,6 @@ function CartItemRow({ product, setCartItems, cartItems }: CartItemRowProps) {
       buttonVariant: "destructive",
       action: removeItem,
     });
-    console.log("yo");
   };
 
   const updateQuantity = async () => {

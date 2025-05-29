@@ -1,6 +1,6 @@
 "use client";
 
-import { Category, Product } from "@/types";
+import { Product } from "@/types";
 import { useEffect, useState } from "react";
 import ProductsCarousel from "./ProductsCarousel";
 import {
@@ -53,14 +53,14 @@ function FeaturedProducts({ filterDepartment }: FeaturedProductsProps) {
           setCategories(["All", ...categoriesWithFeaturedProducts]);
         }
       } catch (err) {
-        console.log("Error when fetching featured products");
+        console.log("Error when fetching featured products", err);
       }
     };
     fetchProducts();
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [department, filterDepartment]);
 
   if (products.length < 1) return null;
 

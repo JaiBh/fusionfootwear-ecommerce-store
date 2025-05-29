@@ -2,7 +2,7 @@ import DesktopFilters from "@/components/productsPage/desktopFilters/DesktopFilt
 import MobileTabletFilters from "@/components/productsPage/mobileTabletFilters/MobileTabletFilters";
 import ProductsList from "@/components/productsPage/ProductsList";
 
-async function page() {
+async function SearchPage() {
   return (
     <div className="lg:grid gap-6 grid-cols-[13fr_37fr] items-start lg:w-[90vw] lg:max-w-[1315px] lg:mx-auto py-8 lg:py-12">
       <div className="max-lg:hidden">
@@ -33,4 +33,4 @@ async function page() {
     </div>
   );
 }
-export default page;
+export default SearchPage;

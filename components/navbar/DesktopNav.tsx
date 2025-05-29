@@ -13,7 +13,7 @@ import CartLink from "./CartLink";
 import { useEffect, useState } from "react";
 
 function DesktopNav({ categories }: { categories: Category[] | undefined }) {
-  const [{ department }, setDepartment] = useDepartmentAtom();
+  const [{ department }] = useDepartmentAtom();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

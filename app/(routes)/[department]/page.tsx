@@ -12,7 +12,7 @@ interface PageProps {
   params: Promise<{ department: "mens" | "womens" }>;
 }
 
-async function page({ params }: PageProps) {
+async function DepartmentPage({ params }: PageProps) {
   const { department } = await params;
 
   return (
@@ -47,4 +47,4 @@ async function page({ params }: PageProps) {
     </>
   );
 }
-export default page;
+export default DepartmentPage;

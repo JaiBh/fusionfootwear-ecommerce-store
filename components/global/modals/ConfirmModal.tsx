@@ -10,10 +10,6 @@ import {
 } from "@/components/ui/dialog";
 import { useConfirmationModalAtom } from "@/features/modal/store/useConfirmationModalAtom";
 
-interface ConfirmModalProps {
-  open: boolean;
-}
-
 function ConfirmModal() {
   const [modal, setModal] = useConfirmationModalAtom();
   const { open, title, desc, buttonText, buttonVariant, action } = modal;

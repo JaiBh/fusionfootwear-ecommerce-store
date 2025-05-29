@@ -91,6 +91,7 @@ function CartPage() {
 
         setFormattedCartItems(items.filter((item) => item !== null));
       } catch (err) {
+        console.log("Error formatting cart items", err);
       } finally {
         if (mounted) {
           setIsLoading(false);
