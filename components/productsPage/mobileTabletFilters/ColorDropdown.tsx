@@ -78,12 +78,12 @@ function ColorDropdown({
               }}
             >
               <div
-                className="size-12"
+                className="size-8 md:size-10"
                 style={{ background: color.value }}
               ></div>
               <p
                 className={cn(
-                  "text-present-3",
+                  "text-present-4",
                   colorIds.includes(color.id) && "font-bold"
                 )}
               >

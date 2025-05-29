@@ -48,11 +48,9 @@ function NavSidebar({ toggleSidebar, categories }: NavSidebarProps) {
     setMounted(true);
   }, []);
 
-  if (!mounted) return;
-
   return (
     <Sheet>
-      <SheetTrigger className="cursor-pointer">
+      <SheetTrigger className="cursor-pointer" disabled={!mounted}>
         <Menu size={32}></Menu>
       </SheetTrigger>
       <SheetContent customClose side="left">
@@ -91,8 +89,10 @@ function NavSidebar({ toggleSidebar, categories }: NavSidebarProps) {
 
               {/* Header */}
               <div className="pt-2 text-center space-y-4">
-                <h1 className="text-present-1 text-primary ">FusionFootwear</h1>
-                <p className="text-present-3-bold">
+                <h1 className="text-present-2 md:text-present-1 text-primary ">
+                  FusionFootwear
+                </h1>
+                <p className="max-md:text-present-4-bold md:text-present-3-bold">
                   Where <span className="text-primary">Performance</span> Meets{" "}
                   <span className="text-primary">Style</span>.
                 </p>

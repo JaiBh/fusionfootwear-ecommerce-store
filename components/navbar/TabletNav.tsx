@@ -10,6 +10,7 @@ import NavSidebar from "./NavSidebar";
 import { Category } from "@/types";
 import SavedProductsLink from "./SavedProductsLink";
 import CartLink from "./CartLink";
+import { cn } from "@/lib/utils";
 
 function TabletNav({ categories }: { categories: Category[] | undefined }) {
   const [open, setOpen] = useState(false);
@@ -20,8 +21,6 @@ function TabletNav({ categories }: { categories: Category[] | undefined }) {
     setMounted(true);
   }, []);
 
-  if (!mounted) return;
-
   return (
     <>
       <div className="max-md:hidden lg:hidden grid grid-cols-[auto_1fr_auto] gap-6 py-3 px-3 border-b-[1px]">
@@ -31,7 +30,10 @@ function TabletNav({ categories }: { categories: Category[] | undefined }) {
             categories={categories}
           ></NavSidebar>
           <Link
-            className="flex items-center gap-2"
+            className={cn(
+              "flex items-center gap-2",
+              !mounted && "cursor-not-allowed"
+            )}
             href={department === "Female" ? "/womens" : "/mens"}
           >
             <Logo></Logo>

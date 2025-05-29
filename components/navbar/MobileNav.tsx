@@ -9,6 +9,7 @@ import NavSidebar from "./NavSidebar";
 import { Category } from "@/types";
 import SavedProductsLink from "./SavedProductsLink";
 import CartLink from "./CartLink";
+import { cn } from "@/lib/utils";
 
 function MobileNav({ categories }: { categories: Category[] | undefined }) {
   const [open, setOpen] = useState(false);
@@ -20,7 +21,6 @@ function MobileNav({ categories }: { categories: Category[] | undefined }) {
     setMounted(true);
   }, []);
 
-  if (!mounted) return;
   return (
     <>
       <div className="md:hidden flex items-center justify-between py-3 px-3 border-b-[1px]">
@@ -29,7 +29,10 @@ function MobileNav({ categories }: { categories: Category[] | undefined }) {
             toggleSidebar={() => setOpen(!open)}
             categories={categories}
           ></NavSidebar>
-          <Link href={department === "Female" ? "/womens" : "/mens"}>
+          <Link
+            href={department === "Female" ? "/womens" : "/mens"}
+            className={cn(!mounted && "cursor-not-allowed")}
+          >
             <Logo></Logo>
           </Link>
         </div>

@@ -35,8 +35,9 @@ const SignInCard = ({ setState }: SignInCardProps) => {
 
     setPending(true);
     signIn("password", { email, password, flow: "signIn" })
-      .catch(() => {
+      .catch((err) => {
         setError("Invalid email or password");
+        console.log(err);
       })
       .finally(() => {
         setPending(false);

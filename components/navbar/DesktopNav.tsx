@@ -20,12 +20,14 @@ function DesktopNav({ categories }: { categories: Category[] | undefined }) {
     setMounted(true);
   }, []);
 
-  if (!mounted) return;
   return (
     <>
       <div className="max-lg:hidden grid grid-cols-[auto_auto_1fr_auto] gap-6 px-6 max-w-[1315px] mx-auto">
         <Link
-          className="flex items-center gap-2 py-3"
+          className={cn(
+            "flex items-center gap-2 py-3",
+            !mounted && "cursor-not-allowed"
+          )}
           href={department === "Female" ? "/womens" : "/mens"}
         >
           <Logo></Logo>
@@ -36,7 +38,7 @@ function DesktopNav({ categories }: { categories: Category[] | undefined }) {
             href={"/mens"}
             className={cn(
               "p-4 bg-background transition border-l text-present-3 font-semibold",
-              department === "Male"
+              mounted && department === "Male"
                 ? "bg-primary text-white"
                 : "hover:bg-primary-10 dark:hover:bg-secondary"
             )}
@@ -47,7 +49,7 @@ function DesktopNav({ categories }: { categories: Category[] | undefined }) {
             href={"/womens"}
             className={cn(
               "p-4 bg-background transition border-r text-present-3 font-semibold",
-              department === "Female"
+              mounted && department === "Female"
                 ? "bg-primary text-white"
                 : "hover:bg-primary-10 dark:hover:bg-secondary"
             )}

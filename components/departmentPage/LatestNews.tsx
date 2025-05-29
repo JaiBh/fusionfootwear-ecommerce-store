@@ -9,7 +9,7 @@ function LatestNews() {
   return (
     <div className="text-center space-y-10">
       <h2 className="text-present-2">Latest News</h2>
-      <div className="flex flex-col items-center gap-10 md:flex-row md:justify-between">
+      <div className="grid max-md:grid-rows-3 gap-4 max-md:max-w-[75vw] max-md:mx-auto md:grid-cols-3">
         <Link
           href={"/"}
           className="grid max-lg:grid-rows-2 lg:grid-cols-2 border p-6 bg-white text-grey-900 rounded"
@@ -24,7 +24,7 @@ function LatestNews() {
               ></Image>
             </div>
           </div>
-          <div className="max-w-[180px]">
+          <div className="max-w-[180px] mx-auto">
             <span className="text-present-5">01 Jan, 2025</span>
             <h3 className="text-present-3-bold">Fashion Industry</h3>
             <p className="text-present-4">
@@ -47,7 +47,7 @@ function LatestNews() {
               ></Image>
             </div>
           </div>
-          <div className="max-w-[180px]">
+          <div className="max-w-[180px] mx-auto">
             <span className="text-present-5">01 Jan, 2025</span>
             <h3 className="text-present-3-bold">Best Design Tools</h3>
             <p className="text-present-4">
@@ -70,7 +70,7 @@ function LatestNews() {
               ></Image>
             </div>
           </div>
-          <div className="max-w-[180px]">
+          <div className="max-w-[180px] mx-auto">
             <span className="text-present-5">01 Jan, 2025</span>
             <h3 className="text-present-3-bold">HR Community</h3>
             <p className="text-present-4">

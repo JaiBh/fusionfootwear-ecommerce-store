@@ -18,12 +18,12 @@ interface ProductsCarouselProps {
 
 function ProductsCarousel({ products }: ProductsCarouselProps) {
   return (
-    <Carousel className="mx-8">
+    <Carousel className="md:mx-8">
       <CarouselContent>
         {products.map((product) => (
           <CarouselItem
             key={product.id}
-            className="basis-1/2 md:basis-1/3 lg:basis-1/4"
+            className="basis-[65%] md:basis-[40%] lg:basis-[30%] h-full"
           >
             <Link href={`/product/${product.id}`}>
               <div className="border p-6 space-y-3">
@@ -37,7 +37,9 @@ function ProductsCarousel({ products }: ProductsCarouselProps) {
                 </div>
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-present-5-bold">{product.name}</p>
+                    <p className="text-present-5-bold truncate">
+                      {product.name}
+                    </p>
                     <span className="text-present-5-bold text-primary">
                       ${Number(product.price).toFixed(2)}
                     </span>
@@ -49,8 +51,8 @@ function ProductsCarousel({ products }: ProductsCarouselProps) {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      <CarouselPrevious className="max-md:hidden" />
+      <CarouselNext className="max-md:hidden" />
     </Carousel>
   );
 }

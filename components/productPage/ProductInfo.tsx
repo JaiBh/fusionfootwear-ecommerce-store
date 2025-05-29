@@ -169,7 +169,7 @@ function ProductInfo({ product, sizes, productLine }: ProductInfoProps) {
             disabled={loading}
           ></SizeSelect>
         </div>
-        <div className="flex gap-4 items-center">
+        <div className="grid grid-cols-[1fr_auto] gap-4 items-center">
           <Button
             className="w-full max-w-[300px]"
             disabled={loading || outOfStock}

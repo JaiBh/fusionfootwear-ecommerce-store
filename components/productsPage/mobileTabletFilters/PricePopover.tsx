@@ -46,7 +46,8 @@ function PricePopover({
             variant={
               price.min > 1 || price.max < 1000 ? "destructive" : "outline"
             }
-            className="cursor-pointer"
+            className="cursor-pointer max-md:text-xs"
+            size={"sm"}
             onClick={() => resetFilter("price")}
           >
             RESET
@@ -64,7 +65,7 @@ function PricePopover({
                 <Input
                   type="number"
                   min={1}
-                  className="pl-7"
+                  className="pl-7 text-sm"
                   value={priceInputValue.min < 1 ? "" : priceInputValue.min}
                   onChange={(e) =>
                     setPriceInputValue({
@@ -84,7 +85,7 @@ function PricePopover({
                 <Input
                   type="number"
                   max={1000}
-                  className="pl-7"
+                  className="pl-7 text-sm"
                   value={
                     priceInputValue.max < 1
                       ? ""

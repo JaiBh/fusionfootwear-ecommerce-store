@@ -73,7 +73,7 @@ function ToggleSaveButton({ productId, className }: ToggleSaveButtonProps) {
     >
       {saveProductLoading ? (
         <motion.div
-          className="size-5 border-4 border-t-transparent border-blue-500 rounded-full"
+          className="max-md:size-4 size-5 border-4 border-t-transparent border-blue-500 rounded-full"
           animate={{ rotate: 360 }}
           transition={{
             repeat: Infinity,
@@ -82,9 +82,9 @@ function ToggleSaveButton({ productId, className }: ToggleSaveButtonProps) {
           }}
         />
       ) : isSaved ? (
-        <FaHeart className="text-destructive size-5"></FaHeart>
+        <FaHeart className="text-destructive max-md:size-4 size-5"></FaHeart>
       ) : (
-        <Heart className="group-hover:text-destructive transition group-hover:scale-[1.1] size-5"></Heart>
+        <Heart className="group-hover:text-destructive transition group-hover:scale-[1.1] max-md:size-4 size-5"></Heart>
       )}
     </button>
   );

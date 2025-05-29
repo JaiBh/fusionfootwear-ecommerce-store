@@ -18,7 +18,7 @@ function ProductCard({
 }: ProductCardProps) {
   return (
     <Link href={`/product/${product.id}`}>
-      <Card>
+      <Card className="h-full">
         <CardHeader className="relative aspect-square">
           {product.images?.length ? (
             <Image

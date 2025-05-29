@@ -16,17 +16,18 @@ async function HomePage() {
           <Button
             variant={"default"}
             asChild
-            className="w-26 bg-primary-80 hover:bg-primary-60"
+            className="max-md:w-18 w-26 bg-primary-80 hover:bg-primary-60"
           >
             <Link href={"/mens"}>Men</Link>
           </Button>
-          <h2 className="text-present-2 text-center">
-            Welcome to <span className="text-primary">FusionFootwear</span>
+          <h2 className="text-present-3-bold md:text-present-2 text-center">
+            <span className="max-md:hidden">Welcome to</span>{" "}
+            <span className="text-primary">FusionFootwear</span>
           </h2>
           <Button
             variant={"default"}
             asChild
-            className="w-26 bg-primary-80 hover:bg-primary-60"
+            className="max-md:w-18 w-26 bg-primary-80 hover:bg-primary-60"
           >
             <Link href={"/womens"}>Women</Link>
           </Button>
@@ -40,7 +41,7 @@ async function HomePage() {
           alt="Home Hero"
           className="object-cover opacity-60"
         ></Image>
-        <div className="w-[50%] max-w-[720px] bg-card/80 absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] p-4 md:p-8 rounded-3xl md:space-y-4">
+        <div className="w-[60%] max-w-[720px] bg-card/80 absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] p-4 md:p-8 rounded-3xl md:space-y-4">
           <h1 className="text-present-3-bold md:text-present-2 lg:text-present-1 text-center">
             This is <span className="text-primary">FusionFootwear</span>
           </h1>

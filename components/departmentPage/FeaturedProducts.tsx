@@ -67,7 +67,7 @@ function FeaturedProducts({ filterDepartment }: FeaturedProductsProps) {
   return (
     <div className="space-y-6">
       <h2 className="text-present-2">Featured Products</h2>
-      <Carousel className="mx-8">
+      <Carousel className="md:mx-8">
         <CarouselContent>
           {categories.map((item) => (
             <CarouselItem
@@ -81,8 +81,8 @@ function FeaturedProducts({ filterDepartment }: FeaturedProductsProps) {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <CarouselPrevious className="max-md:hidden" />
+        <CarouselNext className="max-md:hidden" />
       </Carousel>
 
       <ProductsCarousel

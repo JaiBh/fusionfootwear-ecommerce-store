@@ -175,7 +175,7 @@ function ProductsList({
     );
   }
   return (
-    <div className="grid grid-cols-2 gap-1 md:grid-cols-3">
+    <div className="grid grid-cols-2 gap-1 md:grid-cols-3 auto-rows-fr">
       {refinedProducts?.map((product) => (
         <ProductCard
           key={product.id}

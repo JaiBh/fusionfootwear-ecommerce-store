@@ -44,13 +44,13 @@ function SavedProducts() {
       console.log("Error attempting removal of saved item", err);
       toast.error("Could not remove item");
       setSavedProducts(prev);
-    } finally {
     }
   };
 
   useEffect(() => {
     // Prevent unnecessary fetching. Do not execute if user is removing a saved item from list.
     if (userIsLoading) return;
+    if (savedProducts.length) return;
     let mounted = true;
     const updateSavedProducts = async () => {
       try {
@@ -126,12 +126,12 @@ function SavedProducts() {
     );
   }
   return (
-    <section className="grid grid-cols-2 gap-2 md:gap-4 md:grid-cols-3 lg:grid-cols-4 mb-8 md:mb-12">
+    <section className="grid grid-cols-2 auto-rows-fr gap-2 md:gap-4 md:grid-cols-3 lg:grid-cols-4 mb-8 md:mb-12">
       {savedProducts.map((product) => {
         const { id, name, images, price } = product;
         return (
           <Link href={`/product/${id}`} target="_blank" key={id}>
-            <Card>
+            <Card className="h-full">
               <CardHeader className="relative aspect-square">
                 <Image
                   src={
