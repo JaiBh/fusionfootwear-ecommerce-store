@@ -12,6 +12,7 @@ import CartLink from "./CartLink";
 import { useEffect, useState } from "react";
 import RouteLink from "../global/RouteLink";
 import { usePathname } from "next/navigation";
+import { Skeleton } from "../ui/skeleton";
 
 function DesktopNav({ categories }: { categories: Category[] | undefined }) {
   const [{ department }] = useDepartmentAtom();
@@ -70,15 +71,13 @@ function DesktopNav({ categories }: { categories: Category[] | undefined }) {
           <ModeToggle></ModeToggle>
         </div>
       </div>
-      <div
-        className={cn(
-          "bg-secondary",
-          (!categories || categories.length < 1) && "hidden"
-        )}
-      >
+      <div className={"bg-secondary"}>
         <div className="max-lg:hidden max-w-[1315px] mx-auto">
           <ul className="flex items-center">
-            {categories ? (
+            {(!categories || categories.length < 1) && (
+              <CategoriesLoader></CategoriesLoader>
+            )}
+            {categories?.length &&
               categories.map((category) => (
                 <RouteLink
                   key={category.id}
@@ -91,10 +90,7 @@ function DesktopNav({ categories }: { categories: Category[] | undefined }) {
                 >
                   {category.name}
                 </RouteLink>
-              ))
-            ) : (
-              <p className="p-4 text-present-4">Loading...</p>
-            )}
+              ))}
           </ul>
         </div>
       </div>
@@ -102,3 +98,22 @@ function DesktopNav({ categories }: { categories: Category[] | undefined }) {
   );
 }
 export default DesktopNav;
+
+function CategoriesLoader() {
+  const categoriesCount = 7;
+
+  return (
+    <div className="flex gap-2">
+      {Array(categoriesCount)
+        .fill(null)
+        .map((_, index) => {
+          return (
+            <Skeleton
+              key={index}
+              className="w-[7.5rem] h-[2.25rem] bg-primary-10/50 my-[0.5rem]"
+            ></Skeleton>
+          );
+        })}
+    </div>
+  );
+}

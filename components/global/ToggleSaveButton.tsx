@@ -84,7 +84,7 @@ function ToggleSaveButton({ productId, className }: ToggleSaveButtonProps) {
       ) : isSaved ? (
         <FaHeart className="text-destructive max-md:size-4 size-5"></FaHeart>
       ) : (
-        <Heart className="group-hover:text-destructive transition group-hover:scale-[1.1] max-md:size-4 size-5"></Heart>
+        <Heart className="dark:text-black group-hover:text-destructive transition group-hover:scale-[1.1] max-md:size-4 size-5"></Heart>
       )}
     </button>
   );
