@@ -157,7 +157,7 @@ function SavedProducts() {
                   }}
                 >
                   <Trash
-                    className="size-5 group-hover:text-destructive"
+                    className="dark:text-black size-5 group-hover:text-destructive"
                     aria-label="Remove saved product"
                   ></Trash>
                 </button>

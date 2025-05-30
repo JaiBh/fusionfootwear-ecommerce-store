@@ -1,12 +1,10 @@
-github login
-
 Pagination
 
+loaders for product list
+
+loaders for saved items
+
 Out of stock product
-
-Dealing with loading
-
-Favicon
 
 About
 
@@ -32,3 +30,5 @@ shipping options
 Currencies
 
 Add to cart when logged in
+
+loaders for cart
