@@ -14,23 +14,24 @@ import { SignInFlow } from "../types";
 import { useState } from "react";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { TriangleAlert } from "lucide-react";
-import { useRouter } from "next/navigation";
 import logo from "@/assets/logo.svg";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 
 interface SignUpProps {
   setState: (state: SignInFlow) => void;
 }
 
 const SignUpCard = ({ setState }: SignUpProps) => {
-  const router = useRouter();
   const { signIn } = useAuthActions();
+  const searchParams = useSearchParams();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
+  const redirect = searchParams.get("redirect");
 
   const onPasswordSignIn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,21 +41,25 @@ const SignUpCard = ({ setState }: SignUpProps) => {
       return;
     }
     setPending(true);
-    signIn("password", { name, email, password, flow: "signUp" })
+    signIn("password", {
+      name,
+      email,
+      password,
+      flow: "signUp",
+      redirectTo: redirect || "/",
+    })
       .catch((err) => {
-        setError("Something went wrong");
+        setError("This email is already in use");
         console.log(err);
       })
       .finally(() => {
         setPending(false);
-        router.refresh();
       });
   };
   const onProviderSignup = (value: "github" | "google") => {
     setPending(true);
-    signIn(value).finally(() => {
+    signIn(value, { redirectTo: redirect || "/" }).finally(() => {
       setPending(false);
-      router.refresh();
     });
   };
   return (

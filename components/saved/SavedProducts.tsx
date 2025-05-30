@@ -14,9 +14,11 @@ import { Button } from "../ui/button";
 import { toast } from "sonner";
 import { Trash } from "lucide-react";
 import RouteLink from "../global/RouteLink";
+import { usePathname } from "next/navigation";
 
 function SavedProducts() {
   const { data: user, isLoading: userIsLoading } = useGetUser();
+  const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(true);
   const [savedProducts, setSavedProducts] = useState<Product[]>([]);
   const [productHover, setProductHover] = useState("");
@@ -105,7 +107,9 @@ function SavedProducts() {
           all your devices.
         </p>
         <Button variant={"default"} className="w-full cursor-pointer" asChild>
-          <RouteLink href={"/auth"}>SIGN IN</RouteLink>
+          <RouteLink href={`/auth?redirect=${encodeURIComponent(pathname)}`}>
+            SIGN IN
+          </RouteLink>
         </Button>
       </div>
     );

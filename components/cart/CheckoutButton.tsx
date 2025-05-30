@@ -112,7 +112,7 @@ function CheckoutButton({ formattedCartItems }: CheckoutButtonProps) {
       disabled={loading || userIsLoading || formattedCartItems.length < 1}
       onClick={checkout}
     >
-      CHECKOUT
+      CHECKOUT {!user && "AS GUEST"}
     </Button>
   );
 }

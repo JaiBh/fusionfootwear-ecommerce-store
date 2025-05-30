@@ -2,7 +2,7 @@ import Container from "@/components/global/Container";
 import mensBillboard from "@/assets/mensHomeBillboard.jpg";
 import womensBillboard from "@/assets/womensHomeBillboard.jpg";
 import Image from "next/image";
-import FeaturedProducts from "@/components/departmentPage/FeaturedProducts";
+import FeaturedProducts from "@/components/global/FeaturedProducts";
 import ProductAd from "@/components/departmentPage/ProductAd";
 import HomeInfo from "@/components/departmentPage/HomeInfo";
 import LatestNews from "@/components/departmentPage/LatestNews";

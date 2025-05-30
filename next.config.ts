@@ -10,7 +10,15 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "spotted-pheasant-116.convex.cloud",
+      },
+      {
+        protocol: "https",
         hostname: "lh3.googleusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
       },
       {
         protocol: "https",

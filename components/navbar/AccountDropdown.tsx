@@ -22,11 +22,13 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import RouteLink from "../global/RouteLink";
 import { toast } from "sonner";
+import { usePathname } from "next/navigation";
 
 function AccountDropdown() {
   const { isAuthenticated } = useConvexAuth();
   const { signOut } = useAuthActions();
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -50,7 +52,7 @@ function AccountDropdown() {
             </div>
           ) : (
             <RouteLink
-              href={"/auth"}
+              href={`/auth?redirect=${encodeURIComponent(pathname)}`}
               className="pl-4 text-present-3 underline transition hover:text-primary-60"
               onClick={() => {
                 setOpen(false);

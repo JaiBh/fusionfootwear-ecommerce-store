@@ -11,47 +11,57 @@ import {
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { SignInFlow } from "../types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { TriangleAlert } from "lucide-react";
-import { useRouter } from "next/navigation";
 import logo from "@/assets/logo.svg";
 import Image from "next/image";
+import { toast } from "sonner";
+import { useSearchParams } from "next/navigation";
 
 interface SignInCardProps {
   setState: (state: SignInFlow) => void;
 }
 
 const SignInCard = ({ setState }: SignInCardProps) => {
-  const router = useRouter();
   const { signIn } = useAuthActions();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
+  const redirect = searchParams.get("redirect");
 
   const onPasswordSignIn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setPending(true);
-    signIn("password", { email, password, flow: "signIn" })
+    signIn("password", {
+      email,
+      password,
+      flow: "signIn",
+      redirectTo: redirect || "/",
+    })
       .catch((err) => {
         setError("Invalid email or password");
         console.log(err);
       })
       .finally(() => {
         setPending(false);
-        router.refresh();
       });
   };
 
   const onProviderSignIn = (value: "github" | "google") => {
     setPending(true);
-    signIn(value).finally(() => {
-      setPending(false);
-      router.refresh();
-    });
+    signIn(value, { redirectTo: redirect || "/" })
+      .catch(() => {
+        toast.error("Something went wrong...");
+      })
+      .finally(() => {
+        setPending(false);
+      });
   };
+
   return (
     <Card className="p-6 shadow-none border-none">
       <CardHeader className="pt-0 px-0 space-y-2">

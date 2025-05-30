@@ -19,7 +19,7 @@ import { useDepartmentAtom } from "@/features/department/store/useDepartmentAtom
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import { Separator } from "../ui/separator";
 import { useAuthActions } from "@convex-dev/auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import {
   Sheet,
@@ -42,6 +42,7 @@ interface NavSidebarProps {
 function NavSidebar({ toggleSidebar, categories }: NavSidebarProps) {
   const { isAuthenticated } = useConvexAuth();
   const router = useRouter();
+  const pathname = usePathname();
   const [{ department }] = useDepartmentAtom();
   const { signOut } = useAuthActions();
   const [open, setOpen] = useState(false);
@@ -113,7 +114,7 @@ function NavSidebar({ toggleSidebar, categories }: NavSidebarProps) {
                 </p>
                 {isAuthenticated ? (
                   <div className="pt-4">
-                    <UserAvatar size={48}></UserAvatar>
+                    <UserAvatar></UserAvatar>
                   </div>
                 ) : (
                   <RouteLink
@@ -174,7 +175,7 @@ function NavSidebar({ toggleSidebar, categories }: NavSidebarProps) {
                     </div>
                   ) : (
                     <RouteLink
-                      href={"/auth"}
+                      href={`/auth?redirect=${encodeURIComponent(pathname)}`}
                       className="w-fit pl-4 text-present-3 text-grey-500 underline transition hover:text-primary-60"
                     >
                       Sign in | Join

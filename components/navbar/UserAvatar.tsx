@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
-function UserAvatar({ size }: { size: number }) {
+function UserAvatar() {
   const { data: user, isLoading } = useGetUser();
   const router = useRouter();
   const { signOut } = useAuthActions();
@@ -29,14 +29,14 @@ function UserAvatar({ size }: { size: number }) {
           <Image
             src={user.image}
             alt={"User Avatar"}
-            width={size}
-            height={size}
+            width={48}
+            height={48}
             className="object-cover rounded-[50%]"
           ></Image>
         ) : (
           <div
             className={cn(
-              `size-[${size}px] rounded-[50%] flex items-center justify-center bg-primary-60`
+              `size-[48px] rounded-[50%] flex items-center justify-center bg-primary-60 font-bold`
             )}
           >
             {user.email?.charAt(0).toUpperCase()}
@@ -45,6 +45,7 @@ function UserAvatar({ size }: { size: number }) {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem
+          className="cursor-pointer hover:bg-secondary hover:text-primary transition"
           onClick={() => {
             signOut();
             toast.success("You have been signed out");
