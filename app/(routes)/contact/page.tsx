@@ -55,7 +55,7 @@ function ContactPage() {
 
   return (
     <div className="h-full flex items-center justify-center py-[50px]">
-      <div className="w-[90vw] max-w-[640px] bg-card px-6 py-8 space-y-6 rounded-2xl">
+      <div className="w-[90vw] max-w-[640px] bg-secondary px-6 py-8 space-y-6 rounded-2xl">
         <h1 className="text-present-2 text-center">Contact Us</h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
