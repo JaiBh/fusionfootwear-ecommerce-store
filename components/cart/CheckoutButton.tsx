@@ -8,8 +8,10 @@ import postCheckout from "@/actions/postCheckout";
 import { useGetUser } from "@/features/auth/api/useGetUser";
 import { useSearchParams } from "next/navigation";
 import { useCartAtom } from "@/features/cart/store/useCartAtom";
+import { shippingOption } from "@/types";
 
 interface CheckoutButtonProps {
+  shippingOption: { option: shippingOption; price: number };
   formattedCartItems: {
     image: string | null;
     productId: string;
@@ -23,7 +25,10 @@ interface CheckoutButtonProps {
   }[];
 }
 
-function CheckoutButton({ formattedCartItems }: CheckoutButtonProps) {
+function CheckoutButton({
+  formattedCartItems,
+  shippingOption,
+}: CheckoutButtonProps) {
   const { data: user, isLoading: userIsLoading } = useGetUser();
   const [_, setCartItems] = useCartAtom();
   const searchParams = useSearchParams();
@@ -31,7 +36,7 @@ function CheckoutButton({ formattedCartItems }: CheckoutButtonProps) {
   const ItemsPrice = formattedCartItems.reduce((acc, curr) => {
     return (acc += curr.price * curr.quantity);
   }, 0);
-  const shipping = 4.99;
+  const shipping = shippingOption.price;
   const total = ItemsPrice + shipping;
 
   const finalStockCheck = async () => {
@@ -79,7 +84,7 @@ function CheckoutButton({ formattedCartItems }: CheckoutButtonProps) {
         unitIds,
         price: total,
         shippingPrice: shipping,
-        shippingOption: "standard",
+        shippingOption: shippingOption.option,
       });
       window.location = resp.url;
     } catch (err) {

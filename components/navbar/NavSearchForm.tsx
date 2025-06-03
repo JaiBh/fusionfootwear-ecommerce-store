@@ -2,28 +2,25 @@
 
 import { Search } from "lucide-react";
 import { Input } from "../ui/input";
-import { useState, useTransition } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useTransition } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { useLoadingAtom } from "@/features/global/store/useLoadingAtom";
+import { useSearchTermAtom } from "@/features/search/store/useSearchTermAtom";
 
 function NavSearchForm() {
-  const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
   const [_, setLoadingAtom] = useLoadingAtom();
   const router = useRouter();
   const pathname = usePathname();
-  const [searchTerm, setSearchTerm] = useState(
-    searchParams.get("search") || ""
-  );
+  const [searchTerm, setSearchTermAtom] = useSearchTermAtom();
 
   return (
     <form
       className="relative h-full"
       onSubmit={(e) => {
         e.preventDefault();
-        if (!searchTerm) return;
+        if (!searchTerm.length) return;
         if (pathname !== "/search") {
-          console.log("HELLO");
           setLoadingAtom({ isLoading: true });
           startTransition(() => {
             router.push(`/search?search=${searchTerm}`);
@@ -40,7 +37,7 @@ function NavSearchForm() {
       <Input
         type="text"
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={(e) => setSearchTermAtom(e.target.value)}
         className="h-full w-full bg-white rounded-3xl pr-12"
         placeholder="Search for items..."
       ></Input>

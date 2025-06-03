@@ -15,7 +15,6 @@ import UserAvatar from "./UserAvatar";
 import Link from "next/link";
 import SidebarLink from "./SidebarLink";
 import { Category } from "@/types";
-import { useDepartmentAtom } from "@/features/department/store/useDepartmentAtom";
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import { Separator } from "../ui/separator";
 import { useAuthActions } from "@convex-dev/auth/react";
@@ -37,13 +36,17 @@ import { toast } from "sonner";
 interface NavSidebarProps {
   toggleSidebar: () => void;
   categories: Category[] | undefined;
+  department: "Male" | "Female";
 }
 
-function NavSidebar({ toggleSidebar, categories }: NavSidebarProps) {
+function NavSidebar({
+  toggleSidebar,
+  categories,
+  department,
+}: NavSidebarProps) {
   const { isAuthenticated } = useConvexAuth();
   const router = useRouter();
   const pathname = usePathname();
-  const [{ department }] = useDepartmentAtom();
   const { signOut } = useAuthActions();
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -51,8 +54,6 @@ function NavSidebar({ toggleSidebar, categories }: NavSidebarProps) {
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  if (!mounted) return;
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>

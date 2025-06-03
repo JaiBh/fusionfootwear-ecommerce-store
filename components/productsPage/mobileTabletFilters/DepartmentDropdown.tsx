@@ -18,7 +18,7 @@ interface DepartmentDropdownProps {
     type: "size" | "color" | "department";
     value: string;
   }) => void;
-  department: "mens" | "womens" | "unisex" | undefined;
+  department: "Male" | "Female" | "Unisex" | undefined;
   resetFilter: (type: "color" | "size" | "price" | "department") => void;
 }
 
@@ -40,11 +40,12 @@ function DepartmentDropdown({
       </DropdownMenuTrigger>
       <DropdownMenuContent style={{ width: filterWidth }} className="lg:hidden">
         <DropdownMenuLabel className="flex items-center justify-between max-md:flex-col max-md:gap-2">
-          <span>Filter department</span>
+          <span>Department</span>
           <Button
             variant={department === undefined ? "outline" : "destructive"}
             onClick={() => resetFilter("department")}
-            className="cursor-pointer"
+            className="cursor-pointer text-xs"
+            size={"sm"}
           >
             RESET
           </Button>
@@ -53,36 +54,36 @@ function DepartmentDropdown({
         <DropdownMenuGroup>
           <DropdownMenuItem
             className={cn(
-              department === "mens" &&
+              department === "Male" &&
                 "bg-primary text-white hover:!bg-primary hover:!text-white"
             )}
             onClick={() => {
-              addFilter({ type: "department", value: "mens" });
+              addFilter({ type: "department", value: "Male" });
             }}
           >
             Men's
           </DropdownMenuItem>
           <DropdownMenuItem
             className={cn(
-              department === "womens" &&
+              department === "Female" &&
                 "bg-primary text-white hover:!bg-primary hover:!text-white"
             )}
             onClick={() => {
-              addFilter({ type: "department", value: "womens" });
+              addFilter({ type: "department", value: "Female" });
             }}
           >
             Women's
           </DropdownMenuItem>
           <DropdownMenuItem
             className={cn(
-              department === "unisex" &&
+              department === "Unisex" &&
                 "bg-primary text-white hover:!bg-primary hover:!text-white"
             )}
             onClick={() => {
-              addFilter({ type: "department", value: "unisex" });
+              addFilter({ type: "department", value: "Unisex" });
             }}
           >
-            Unisex
+            Only Unisex
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>

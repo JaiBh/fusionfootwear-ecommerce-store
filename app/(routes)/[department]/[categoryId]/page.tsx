@@ -3,10 +3,10 @@ import Image from "next/image";
 import backupBillboard from "@/assets/backup_billboard.jpg";
 import BreadCrumbTemplate from "@/components/global/BreadCrumbTemplate";
 import ProductsList from "@/components/productsPage/ProductsList";
-import { redirect } from "next/navigation";
 import MobileTabletFilters from "@/components/productsPage/mobileTabletFilters/MobileTabletFilters";
 import DesktopFilters from "@/components/productsPage/desktopFilters/DesktopFilters";
 import { Category } from "@/types";
+import ErrorMessage from "@/components/productPage/ErrorMessage";
 
 async function CategoryPage({
   params,
@@ -22,7 +22,9 @@ async function CategoryPage({
   } catch {}
 
   if (!category) {
-    redirect(`/${department}`);
+    return (
+      <ErrorMessage message="Seems like this category does not exist"></ErrorMessage>
+    );
   }
   const navigationLinks = [
     { text: "Home", href: `/${department}` },

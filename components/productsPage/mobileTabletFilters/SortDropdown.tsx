@@ -8,22 +8,24 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useSelectedFiltersAtom } from "@/features/products/store/useSelectedFiltersAtom";
 import { cn } from "@/lib/utils";
-import { useRouter, useSearchParams } from "next/navigation";
 
 interface SortDropdownProps {
   filterWidth: number | undefined;
 }
 
 function SortDropdown({ filterWidth }: SortDropdownProps) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const sortBy = searchParams.get("sortBy");
+  const [atom, setSelectedFilters] = useSelectedFiltersAtom();
 
-  const addSort = (value: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("sortBy", value);
-    router.push(`?${params.toString()}`);
+  const addSort = (
+    value: "a-z" | "z-a" | "price-high-to-low" | "price-low-to-high"
+  ) => {
+    setSelectedFilters({ ...atom, sortBy: value });
+  };
+
+  const clearSort = () => {
+    setSelectedFilters({ ...atom, sortBy: undefined });
   };
 
   return (
@@ -40,7 +42,7 @@ function SortDropdown({ filterWidth }: SortDropdownProps) {
         <DropdownMenuGroup>
           <DropdownMenuItem
             className={cn(
-              sortBy === "a-z" &&
+              atom.sortBy === "a-z" &&
                 "bg-primary text-white hover:!bg-primary hover:!text-white"
             )}
             onClick={() => {
@@ -51,7 +53,7 @@ function SortDropdown({ filterWidth }: SortDropdownProps) {
           </DropdownMenuItem>
           <DropdownMenuItem
             className={cn(
-              sortBy === "z-a" &&
+              atom.sortBy === "z-a" &&
                 "bg-primary text-white hover:!bg-primary hover:!text-white"
             )}
             onClick={() => {
@@ -62,7 +64,7 @@ function SortDropdown({ filterWidth }: SortDropdownProps) {
           </DropdownMenuItem>
           <DropdownMenuItem
             className={cn(
-              sortBy === "price-high-to-low" &&
+              atom.sortBy === "price-high-to-low" &&
                 "bg-primary text-white hover:!bg-primary hover:!text-white"
             )}
             onClick={() => {
@@ -73,7 +75,7 @@ function SortDropdown({ filterWidth }: SortDropdownProps) {
           </DropdownMenuItem>
           <DropdownMenuItem
             className={cn(
-              sortBy === "price-low-to-high" &&
+              atom.sortBy === "price-low-to-high" &&
                 "bg-primary text-white hover:!bg-primary hover:!text-white"
             )}
             onClick={() => {

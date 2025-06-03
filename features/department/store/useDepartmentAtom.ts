@@ -1,13 +1,23 @@
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
+import { useEffect, useState } from "react";
 
-const departmentState = atomWithStorage<{ department: "Male" | "Female" }>(
+const stuff = atomWithStorage<{
+  department: "Male" | "Female";
+}>("department", {
+  department: "Male",
+});
+
+const departmentState = atomWithStorage<"Male" | "Female">(
   "department",
-  {
-    department: "Male",
-  }
+  "Male"
 );
 
 export const useDepartmentAtom = () => {
-  return useAtom(departmentState);
+  const [hydrate, setHydrate] = useState(false);
+  const [department, setDepartmentAtom] = useAtom(departmentState);
+  useEffect(() => {
+    setHydrate(true);
+  }, []);
+  return { department, setDepartmentAtom, hydrate };
 };

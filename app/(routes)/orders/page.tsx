@@ -14,7 +14,7 @@ import { toast } from "sonner";
 
 function OrdersPage() {
   const { data: user, isLoading: userIsLoading } = useGetUser();
-  const [{ department }] = useDepartmentAtom();
+  const { department } = useDepartmentAtom();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 

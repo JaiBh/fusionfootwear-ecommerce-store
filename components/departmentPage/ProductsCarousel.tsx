@@ -29,7 +29,7 @@ function ProductsCarousel({ products }: ProductsCarouselProps) {
               href={`/product/${product.id}`}
               className="w-full text-start"
             >
-              <div className="border p-6 space-y-3">
+              <div className="border p-6 space-y-5">
                 <div className="relative aspect-square w-full">
                   <Image
                     src={product.images[0].url}

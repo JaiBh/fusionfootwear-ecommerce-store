@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { ModeToggle } from "../ui/mode-toggle";
 import Logo from "../global/Logo";
 import NavSearchForm from "./NavSearchForm";
-import { useDepartmentAtom } from "@/features/department/store/useDepartmentAtom";
 import NavSidebar from "./NavSidebar";
 import { Category } from "@/types";
 import SavedProductsLink from "./SavedProductsLink";
@@ -12,9 +11,14 @@ import CartLink from "./CartLink";
 import { cn } from "@/lib/utils";
 import RouteLink from "../global/RouteLink";
 
-function TabletNav({ categories }: { categories: Category[] | undefined }) {
+function TabletNav({
+  categories,
+  department,
+}: {
+  categories: Category[] | undefined;
+  department: "Male" | "Female";
+}) {
   const [open, setOpen] = useState(false);
-  const [{ department }] = useDepartmentAtom();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -27,6 +31,7 @@ function TabletNav({ categories }: { categories: Category[] | undefined }) {
         <div className="flex items-center gap-4">
           <NavSidebar
             toggleSidebar={() => setOpen(!open)}
+            department={department}
             categories={categories}
           ></NavSidebar>
           <RouteLink

@@ -2,33 +2,21 @@
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Product, Size } from "@/types";
+import { Size } from "@/types";
 
 interface SizeFilterProps {
-  products: Product[];
+  sizeOptions: Size[];
   sizeIds: string[];
   addFilter: (submission: { type: "color" | "size"; value: string }) => void;
   resetFilter: (type: "color" | "size" | "price") => void;
 }
 
 function SizeFilter({
-  products,
+  sizeOptions,
   sizeIds,
   addFilter,
   resetFilter,
 }: SizeFilterProps) {
-  const sizeOptionsIds: string[] = [];
-  const sizeOptions: Size[] = [];
-
-  products.forEach((product) => {
-    product.units.forEach((unit) => {
-      if (!sizeOptionsIds.includes(unit.size.id)) {
-        sizeOptionsIds.push(unit.size.id);
-        sizeOptions.push(unit.size);
-      }
-    });
-  });
-
   return (
     <div className="bg-secondary p-6 space-y-4 rounded">
       <div className="flex items-center justify-between">

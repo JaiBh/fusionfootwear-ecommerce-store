@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { Color, Product } from "@/types";
+import { Color } from "@/types";
 import { RefObject } from "react";
 
 interface ColorDropdownProps {
@@ -20,7 +20,7 @@ interface ColorDropdownProps {
   colorIds: string[];
   addFilter: (submission: { type: "color" | "size"; value: string }) => void;
   resetFilter: (type: "color" | "size" | "price") => void;
-  products: Product[];
+  colorOptions: Color[];
 }
 
 function ColorDropdown({
@@ -29,17 +29,8 @@ function ColorDropdown({
   resetFilter,
   colorIds,
   addFilter,
-  products,
+  colorOptions,
 }: ColorDropdownProps) {
-  const colorOptionsIds: string[] = [];
-  const colorOptions: Color[] = [];
-
-  products.forEach((product) => {
-    if (!colorOptionsIds.includes(product.color.id)) {
-      colorOptionsIds.push(product.color.id);
-      colorOptions.push(product.color);
-    }
-  });
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -56,8 +47,9 @@ function ColorDropdown({
           <h3 className="text-present-3-bold">Colors</h3>
           <Button
             variant={colorIds.length ? "destructive" : "outline"}
-            className="cursor-pointer"
+            className="cursor-pointer text-xs"
             onClick={() => resetFilter("color")}
+            size={"sm"}
           >
             CLEAR
           </Button>

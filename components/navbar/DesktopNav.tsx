@@ -3,7 +3,6 @@
 import { ModeToggle } from "../ui/mode-toggle";
 import Logo from "../global/Logo";
 import NavSearchForm from "./NavSearchForm";
-import { useDepartmentAtom } from "@/features/department/store/useDepartmentAtom";
 import { cn } from "@/lib/utils";
 import AccountDropdown from "./AccountDropdown";
 import { Category } from "@/types";
@@ -14,8 +13,13 @@ import RouteLink from "../global/RouteLink";
 import { usePathname } from "next/navigation";
 import { Skeleton } from "../ui/skeleton";
 
-function DesktopNav({ categories }: { categories: Category[] | undefined }) {
-  const [{ department }] = useDepartmentAtom();
+function DesktopNav({
+  categories,
+  department,
+}: {
+  categories: Category[] | undefined;
+  department: "Male" | "Female";
+}) {
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
 

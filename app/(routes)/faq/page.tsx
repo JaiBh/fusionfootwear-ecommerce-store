@@ -55,7 +55,7 @@ function FaqPage() {
           <AccordionContent>
             If your order hasn’t shipped yet, we can make changes.{" "}
             <a
-              href="mailto:support@fusionfootwear.com"
+              href="/contact"
               className="text-primary-60 font-semibold underline hover:text-primary-80"
             >
               Contact us

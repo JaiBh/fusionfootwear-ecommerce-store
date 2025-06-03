@@ -3,17 +3,22 @@
 import { useEffect, useState } from "react";
 import { ModeToggle } from "../ui/mode-toggle";
 import Logo from "../global/Logo";
-import { useDepartmentAtom } from "@/features/department/store/useDepartmentAtom";
 import NavSidebar from "./NavSidebar";
 import { Category } from "@/types";
 import SavedProductsLink from "./SavedProductsLink";
 import CartLink from "./CartLink";
 import { cn } from "@/lib/utils";
 import RouteLink from "../global/RouteLink";
+import SearchSheet from "./SearchSheet";
 
-function MobileNav({ categories }: { categories: Category[] | undefined }) {
+function MobileNav({
+  categories,
+  department,
+}: {
+  categories: Category[] | undefined;
+  department: "Male" | "Female";
+}) {
   const [open, setOpen] = useState(false);
-  const [{ department }] = useDepartmentAtom();
 
   const [mounted, setMounted] = useState(false);
 
@@ -26,6 +31,7 @@ function MobileNav({ categories }: { categories: Category[] | undefined }) {
       <div className="md:hidden flex items-center justify-between py-3 px-3 border-b-[1px]">
         <div className="flex items-center gap-4">
           <NavSidebar
+            department={department}
             toggleSidebar={() => setOpen(!open)}
             categories={categories}
           ></NavSidebar>
@@ -41,6 +47,7 @@ function MobileNav({ categories }: { categories: Category[] | undefined }) {
           </RouteLink>
         </div>
         <div className="flex items-center gap-4">
+          <SearchSheet></SearchSheet>
           <SavedProductsLink></SavedProductsLink>
           <CartLink></CartLink>
           <ModeToggle></ModeToggle>

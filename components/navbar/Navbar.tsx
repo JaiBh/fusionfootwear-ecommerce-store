@@ -9,11 +9,12 @@ import { Category } from "@/types";
 import getCategories from "@/actions/getCategories";
 
 function Navbar() {
-  const [{ department }] = useDepartmentAtom();
+  const { department, hydrate } = useDepartmentAtom();
 
   const [categories, setCategories] = useState<Category[]>();
 
   useEffect(() => {
+    if (!hydrate) return;
     let mounted = true;
 
     const fetchCategories = async () => {
@@ -34,9 +35,9 @@ function Navbar() {
 
   return (
     <nav className="z-20">
-      <MobileNav categories={categories}></MobileNav>
-      <TabletNav categories={categories}></TabletNav>
-      <DesktopNav categories={categories}></DesktopNav>
+      <MobileNav categories={categories} department={department}></MobileNav>
+      <TabletNav categories={categories} department={department}></TabletNav>
+      <DesktopNav categories={categories} department={department}></DesktopNav>
     </nav>
   );
 }

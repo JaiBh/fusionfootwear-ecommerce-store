@@ -53,7 +53,10 @@ function ToggleSaveButton({ productId, className }: ToggleSaveButtonProps) {
   }, [userIsLoading, productId, user, localSavedProductsIds]);
   return (
     <button
-      className={cn("bg-secondary p-2 rounded-[50%] cursor-pointer", className)}
+      className={cn(
+        "bg-secondary dark:bg-white/90 p-2 rounded-[50%] cursor-pointer group",
+        className
+      )}
       disabled={saveProductLoading}
       onClick={async (e) => {
         e.preventDefault();

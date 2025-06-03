@@ -24,7 +24,7 @@ function ProductInfo({ product, sizes, productLine }: ProductInfoProps) {
   const { data: user, isLoading: userIsLoading } = useGetUser();
   const [{ localSavedProductsIds }] = useLocalSavedProductsAtom();
   const [cartItems, setCartItems] = useCartAtom();
-  const [{ department }, setDepartment] = useDepartmentAtom();
+  const { department, setDepartmentAtom } = useDepartmentAtom();
 
   const [selectedSize, setSelectedSize] = useState<string | undefined>(
     undefined
@@ -89,7 +89,7 @@ function ProductInfo({ product, sizes, productLine }: ProductInfoProps) {
   useEffect(() => {
     if (product.department !== "Unisex") {
       if (product.department !== department) {
-        setDepartment({ department: product.department });
+        setDepartmentAtom(product.department);
       }
     }
 
@@ -127,7 +127,7 @@ function ProductInfo({ product, sizes, productLine }: ProductInfoProps) {
     localSavedProductsIds,
     department,
     product.department,
-    setDepartment,
+    setDepartmentAtom,
   ]);
 
   return (

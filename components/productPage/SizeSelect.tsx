@@ -28,7 +28,7 @@ function SizeSelect({
   outOfStock,
   disabled,
 }: SizeSelectProps) {
-  const [{ department }] = useDepartmentAtom();
+  const { department } = useDepartmentAtom();
   const [mounted, setMounted] = useState(false);
   const sizeOptions =
     department === "Male"

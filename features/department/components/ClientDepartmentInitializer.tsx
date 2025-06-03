@@ -1,4 +1,3 @@
-// components/ClientDepartmentInitializer.tsx
 "use client";
 
 import { useEffect } from "react";
@@ -9,19 +8,24 @@ export default function ClientDepartmentInitializer({
 }: {
   department: string;
 }) {
-  const [{ department: departmentStore }, setDepartment] = useDepartmentAtom();
+  const {
+    department: departmentStore,
+    setDepartmentAtom,
+    hydrate,
+  } = useDepartmentAtom();
 
   useEffect(() => {
+    if (!hydrate) return;
     if (department === "mens") {
       if (departmentStore !== "Male") {
-        setDepartment({ department: "Male" });
+        setDepartmentAtom("Male");
       }
     } else if (department === "womens") {
       if (departmentStore !== "Female") {
-        setDepartment({ department: "Female" });
+        setDepartmentAtom("Female");
       }
     }
-  }, [department, departmentStore, setDepartment]);
+  }, [department, departmentStore, setDepartmentAtom, hydrate]);
 
-  return null; // doesn't render anything
+  return null;
 }

@@ -9,16 +9,17 @@ import FullScreenLoading from "@/components/global/FullScreenLoading";
 import { Button } from "@/components/ui/button";
 import { useCartAtom } from "@/features/cart/store/useCartAtom";
 import { useDepartmentAtom } from "@/features/department/store/useDepartmentAtom";
-import { CartItem } from "@/types";
+import { CartItem, shippingOption } from "@/types";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import CartInfo from "@/components/cart/CartInfo";
 import CheckoutButton from "@/components/cart/CheckoutButton";
 import RouteLink from "@/components/global/RouteLink";
+import ShippingOptions from "@/components/cart/ShippingOptions";
 
 function CartPage() {
   const [cartItems, setCartItems] = useCartAtom();
-  const [{ department }] = useDepartmentAtom();
+  const { department } = useDepartmentAtom();
   const [formattedCartItems, setFormattedCartItems] = useState<
     | {
         image: string | null;
@@ -35,6 +36,10 @@ function CartPage() {
   >(undefined);
   const [quantityAdjusted, setQuantityAdjusted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [shippingOption, setShippingOption] = useState<{
+    option: shippingOption;
+    price: number;
+  }>({ option: "standard", price: 4.99 });
 
   useEffect(() => {
     let mounted = true;
@@ -141,9 +146,17 @@ function CartPage() {
         ></CartItemsList>
 
         <div className="space-y-4 max-w-[400px] mx-auto w-full">
-          <CartInfo formattedCartItems={formattedCartItems}></CartInfo>
+          <ShippingOptions
+            shippingOption={shippingOption}
+            setShippingOption={setShippingOption}
+          ></ShippingOptions>
+          <CartInfo
+            formattedCartItems={formattedCartItems}
+            shippingOption={shippingOption}
+          ></CartInfo>
           <CheckoutButton
             formattedCartItems={formattedCartItems}
+            shippingOption={shippingOption}
           ></CheckoutButton>
         </div>
       </Container>

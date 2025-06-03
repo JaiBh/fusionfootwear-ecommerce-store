@@ -1,11 +1,17 @@
+import { Color, Size } from "@/types";
 import { atom, useAtom } from "jotai";
 
 const selectedFiltersState = atom<{
+  colorOptions: Color[];
+  sizeOptions: Size[];
   colorIds: string[];
   sizeIds: string[];
   price: { min: number; max: number };
-  department: "mens" | "womens" | "unisex" | undefined;
+  department: "Male" | "Female" | "Unisex" | undefined;
+  sortBy: "a-z" | "z-a" | "price-high-to-low" | "price-low-to-high" | undefined;
 }>({
+  colorOptions: [],
+  sizeOptions: [],
   colorIds: [],
   sizeIds: [],
   price: {
@@ -13,6 +19,7 @@ const selectedFiltersState = atom<{
     max: 1000,
   },
   department: undefined,
+  sortBy: undefined,
 });
 
 export const useSelectedFiltersAtom = () => {

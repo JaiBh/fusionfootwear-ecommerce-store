@@ -3,32 +3,22 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { Color, Product } from "@/types";
+import { Color } from "@/types";
 import { Check } from "lucide-react";
 
 interface ColorFilterProps {
-  products: Product[];
   addFilter: (submission: { type: "color" | "size"; value: string }) => void;
   colorIds: string[];
   resetFilter: (type: "color" | "size" | "price") => void;
+  colorOptions: Color[];
 }
 
 function ColorFilter({
-  products,
   addFilter,
   colorIds,
   resetFilter,
+  colorOptions,
 }: ColorFilterProps) {
-  const colorOptionsIds: string[] = [];
-  const colorOptions: Color[] = [];
-
-  products.forEach((product) => {
-    if (!colorOptionsIds.includes(product.color.id)) {
-      colorOptionsIds.push(product.color.id);
-      colorOptions.push(product.color);
-    }
-  });
-
   return (
     <div className="bg-secondary p-6 space-y-4 rounded">
       <div className="flex items-center justify-between">

@@ -99,4 +99,8 @@ export interface CartItem {
   sizeId: string;
 }
 
-export type shippingOption = "standard";
+export type shippingOption =
+  | "standard"
+  | "eco-friendly"
+  | "express"
+  | "next-day";

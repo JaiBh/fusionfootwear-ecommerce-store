@@ -69,7 +69,7 @@ function Footer() {
           <div className="space-y-4 max-w-[220px]">
             <RouteLink
               href={"/contact"}
-              className="text-present-2 transition hover:text-primary"
+              className="block text-present-2 transition hover:text-primary"
             >
               Contact Us
             </RouteLink>

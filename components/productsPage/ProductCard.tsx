@@ -9,12 +9,14 @@ interface ProductCardProps {
   product: Product;
   productHover: string;
   setProductHover: (value: SetStateAction<string>) => void;
+  searchTerm: string | undefined;
 }
 
 function ProductCard({
   product,
   productHover,
   setProductHover,
+  searchTerm,
 }: ProductCardProps) {
   return (
     <RouteLink href={`/product/${product.id}`}>
@@ -43,11 +45,16 @@ function ProductCard({
             className="absolute bottom-[1rem] right-[1rem] bg-white group"
           ></ToggleSaveButton>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-1">
           <p className="text-present-4">{product.name}</p>
-          <p className="text-present-4-bold">
-            ${Number(product.price).toFixed(2)}
-          </p>
+          <div className="flex items-center justify-between">
+            <p className="text-present-4-bold">
+              ${Number(product.price).toFixed(2)}
+            </p>
+            {searchTerm?.length && (
+              <p className="text-present-4">{product.category.name}</p>
+            )}
+          </div>
         </CardContent>
       </Card>
     </RouteLink>

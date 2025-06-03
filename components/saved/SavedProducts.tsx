@@ -15,6 +15,7 @@ import { toast } from "sonner";
 import { Trash } from "lucide-react";
 import RouteLink from "../global/RouteLink";
 import { usePathname } from "next/navigation";
+import { Skeleton } from "../ui/skeleton";
 
 function SavedProducts() {
   const { data: user, isLoading: userIsLoading } = useGetUser();
@@ -94,10 +95,6 @@ function SavedProducts() {
     };
   }, [user, userIsLoading, localSavedProductsIds]);
 
-  if (isLoading) {
-    return <FullScreenLoading></FullScreenLoading>;
-  }
-
   if (!isLoading && !user && savedProducts.length < 1) {
     return (
       <div className="mx-auto max-w-[250px] space-y-4 text-center pt-8 md:pt-12">
@@ -131,48 +128,70 @@ function SavedProducts() {
   }
   return (
     <section className="grid grid-cols-2 auto-rows-fr gap-2 md:gap-4 md:grid-cols-3 lg:grid-cols-4 mb-8 md:mb-12">
-      {savedProducts.map((product) => {
-        const { id, name, images, price } = product;
-        return (
-          <RouteLink href={`/product/${id}`} key={id}>
-            <Card className="h-full">
-              <CardHeader className="relative aspect-square">
-                <Image
-                  src={
-                    images.length > 1
-                      ? productHover === id
-                        ? images[1].url
+      {isLoading ? (
+        <SavedProductsLoader></SavedProductsLoader>
+      ) : (
+        savedProducts.map((product) => {
+          const { id, name, images, price } = product;
+          return (
+            <RouteLink href={`/product/${id}`} key={id}>
+              <Card className="h-full">
+                <CardHeader className="relative aspect-square">
+                  <Image
+                    src={
+                      images.length > 1
+                        ? productHover === id
+                          ? images[1].url
+                          : images[0].url
                         : images[0].url
-                      : images[0].url
-                  }
-                  alt={`${name} image`}
-                  fill
-                  onMouseEnter={() => setProductHover(id)}
-                  onMouseLeave={() => setProductHover("")}
-                ></Image>
-                <button
-                  className="absolute top-[1rem] right-[1rem] bg-white p-2 rounded-[50%] cursor-pointer group"
-                  onClick={(e) => {
-                    removeSavedProduct(e, id);
-                  }}
-                >
-                  <Trash
-                    className="dark:text-black size-5 group-hover:text-destructive"
-                    aria-label="Remove saved product"
-                  ></Trash>
-                </button>
-              </CardHeader>
-              <CardContent>
-                <p className="text-present-4">{name}</p>
-                <p className="text-present-4-bold">
-                  ${Number(price).toFixed(2)}
-                </p>
-              </CardContent>
-            </Card>
-          </RouteLink>
-        );
-      })}
+                    }
+                    alt={`${name} image`}
+                    fill
+                    onMouseEnter={() => setProductHover(id)}
+                    onMouseLeave={() => setProductHover("")}
+                  ></Image>
+                  <button
+                    className="absolute top-[1rem] right-[1rem] bg-white p-2 rounded-[50%] cursor-pointer group"
+                    onClick={(e) => {
+                      removeSavedProduct(e, id);
+                    }}
+                  >
+                    <Trash
+                      className="dark:text-black size-5 group-hover:text-destructive"
+                      aria-label="Remove saved product"
+                    ></Trash>
+                  </button>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-present-4">{name}</p>
+                  <p className="text-present-4-bold">
+                    ${Number(price).toFixed(2)}
+                  </p>
+                </CardContent>
+              </Card>
+            </RouteLink>
+          );
+        })
+      )}
     </section>
   );
 }
 export default SavedProducts;
+
+function SavedProductsLoader() {
+  const times = 8;
+  return (
+    <>
+      {Array(times)
+        .fill(null)
+        .map((_, index) => {
+          return (
+            <div key={index}>
+              <Skeleton className="aspect-square rounded-b-none"></Skeleton>
+              <Skeleton className="h-12 rounded-t-none"></Skeleton>
+            </div>
+          );
+        })}
+    </>
+  );
+}

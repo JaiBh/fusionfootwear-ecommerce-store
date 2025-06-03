@@ -9,7 +9,7 @@ interface ProductBreadCrumbProps {
 }
 
 function ProductBreadCrumb({ product }: ProductBreadCrumbProps) {
-  const [{ department }] = useDepartmentAtom();
+  const { department } = useDepartmentAtom();
 
   const navigationLinks = [
     { text: "Home", href: `/${department === "Male" ? "mens" : "womens"}` },

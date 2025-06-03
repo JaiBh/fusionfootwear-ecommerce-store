@@ -1,6 +1,8 @@
+import { shippingOption } from "@/types";
 import { Card, CardContent } from "../ui/card";
 
 interface CartInfoProps {
+  shippingOption: { option: shippingOption; price: number };
   formattedCartItems: {
     image: string | null;
     productId: string;
@@ -14,11 +16,11 @@ interface CartInfoProps {
   }[];
 }
 
-function CartInfo({ formattedCartItems }: CartInfoProps) {
+function CartInfo({ formattedCartItems, shippingOption }: CartInfoProps) {
   const ItemsPrice = formattedCartItems.reduce((acc, curr) => {
     return (acc += curr.price * curr.quantity);
   }, 0);
-  const shipping = 4.99;
+  const shipping = shippingOption.price;
   const total = ItemsPrice + shipping;
   return (
     <Card>
@@ -34,8 +36,8 @@ function CartInfo({ formattedCartItems }: CartInfoProps) {
           <h4 className="text-present-4">${ItemsPrice.toFixed(2)}</h4>
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-present-4 text-grey-500 dark:text-grey-300">
-            Shipping
+          <span className="text-present-4 text-grey-500 dark:text-grey-300 capitalize">
+            Shipping - {shippingOption.option}
           </span>
           <h4 className="text-present-4">${shipping.toFixed(2)}</h4>
         </div>

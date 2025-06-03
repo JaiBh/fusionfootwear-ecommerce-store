@@ -24,9 +24,10 @@ function FeaturedProducts({ filterDepartment }: FeaturedProductsProps) {
   const [categories, setCategories] = useState<string[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [{ department }] = useDepartmentAtom();
+  const { department, hydrate } = useDepartmentAtom();
 
   useEffect(() => {
+    if (!hydrate) return;
     let mounted = true;
     const fetchProducts = async () => {
       setLoading(true);
@@ -35,16 +36,10 @@ function FeaturedProducts({ filterDepartment }: FeaturedProductsProps) {
           department: filterDepartment ? department : undefined,
           isArchived: false,
           isFeatured: true,
-        }).then((products) =>
-          products.filter(async (product) => {
-            const units = product.units.filter(
-              (unit) => unit.isArchived === false
-            );
-            if (units.length > 0) return product;
-          })
-        );
+        });
         const categoriesWithFeaturedProducts: string[] = [];
-        resp.forEach((product) => {
+
+        resp.products.forEach((product) => {
           if (categoriesWithFeaturedProducts.includes(product.category.name)) {
             return;
           } else {
@@ -52,7 +47,7 @@ function FeaturedProducts({ filterDepartment }: FeaturedProductsProps) {
           }
         });
         if (mounted) {
-          setProducts(resp);
+          setProducts(resp.products);
           setCategories(["All", ...categoriesWithFeaturedProducts]);
         }
       } catch (err) {
@@ -67,7 +62,10 @@ function FeaturedProducts({ filterDepartment }: FeaturedProductsProps) {
     return () => {
       mounted = false;
     };
-  }, [department, filterDepartment]);
+  }, [department, filterDepartment, hydrate]);
+
+  // if (!loading && categories.length < 1) return null;
+  // if (!loading && products.length < 1) return null;
 
   return (
     <div className="space-y-6">

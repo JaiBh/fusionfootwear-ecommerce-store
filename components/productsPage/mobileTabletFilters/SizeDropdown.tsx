@@ -11,11 +11,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { Product, Size } from "@/types";
+import { Size } from "@/types";
 
 interface SizeDropdownProps {
   filterWidth: number | undefined;
-  products: Product[];
+  sizeOptions: Size[];
   sizeIds: string[];
   addFilter: (submission: { type: "color" | "size"; value: string }) => void;
   resetFilter: (type: "color" | "size" | "price") => void;
@@ -26,19 +26,8 @@ function SizeDropdown({
   resetFilter,
   filterWidth,
   sizeIds,
-  products,
+  sizeOptions,
 }: SizeDropdownProps) {
-  const sizeOptionsIds: string[] = [];
-  const sizeOptions: Size[] = [];
-
-  products.forEach((product) => {
-    product.units.forEach((unit) => {
-      if (!sizeOptionsIds.includes(unit.size.id)) {
-        sizeOptionsIds.push(unit.size.id);
-        sizeOptions.push(unit.size);
-      }
-    });
-  });
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -54,8 +43,9 @@ function SizeDropdown({
           <h3 className="text-present-3-bold">Sizes</h3>
           <Button
             variant={sizeIds.length ? "destructive" : "outline"}
-            className="cursor-pointer"
+            className="cursor-pointer text-xs"
             onClick={() => resetFilter("size")}
+            size={"sm"}
           >
             CLEAR
           </Button>

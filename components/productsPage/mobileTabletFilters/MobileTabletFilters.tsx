@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useFetchedProductsAtom } from "@/features/products/store/useFetchedProductsAtom";
 import { useSelectedFiltersAtom } from "@/features/products/store/useSelectedFiltersAtom";
 import SortDropdown from "./SortDropdown";
 import ColorDropdown from "./ColorDropdown";
@@ -25,9 +24,9 @@ function MobileTabletFilters({
   showSizeFilter,
   showSortBy,
 }: MobileTabletFiltersProps) {
-  const [{ products }] = useFetchedProductsAtom();
-  const [{ colorIds, sizeIds, price, department }, setSelectedFilters] =
-    useSelectedFiltersAtom();
+  const [atom, setSelectedFilters] = useSelectedFiltersAtom();
+  const { colorIds, sizeIds, price, department, colorOptions, sizeOptions } =
+    atom;
   const filterRef = useRef<HTMLButtonElement>(null);
   const [filterWidth, setFilterWidth] = useState<number | undefined>(undefined);
   const [priceInputValue, setPriceInputValue] = useState<{
@@ -60,19 +59,16 @@ function MobileTabletFilters({
   }) => {
     if (submission.type === "color") {
       setSelectedFilters({
-        department,
+        ...atom,
         colorIds: [
           ...colorIds.filter((colorId) => colorId !== submission.value),
         ],
         sizeIds: sizeIds,
-        price,
       });
     } else {
       setSelectedFilters({
-        department,
-        colorIds,
+        ...atom,
         sizeIds: [...sizeIds.filter((sizeId) => sizeId !== submission.value)],
-        price,
       });
     }
   };
@@ -86,10 +82,9 @@ function MobileTabletFilters({
         removeFilter({ type: "color", value: submission.value });
       } else {
         setSelectedFilters({
-          department,
+          ...atom,
           colorIds: [...colorIds, submission.value],
           sizeIds: sizeIds,
-          price,
         });
       }
     } else if (submission.type === "size") {
@@ -97,44 +92,36 @@ function MobileTabletFilters({
         removeFilter({ type: "size", value: submission.value });
       } else {
         setSelectedFilters({
-          department,
-          colorIds,
+          ...atom,
           sizeIds: [...sizeIds, submission.value],
-          price,
         });
       }
     } else if (submission.type === "department") {
-      if (submission.value === "mens") {
-        if (department === "mens") {
+      if (submission.value === "Male") {
+        if (department === "Male") {
           resetFilter("department");
         } else {
           setSelectedFilters({
-            colorIds,
-            price,
-            sizeIds,
-            department: "mens",
+            ...atom,
+            department: "Male",
           });
         }
-      } else if (submission.value === "womens") {
-        if (department === "womens") {
+      } else if (submission.value === "Female") {
+        if (department === "Female") {
           resetFilter("department");
         } else {
           setSelectedFilters({
-            colorIds,
-            price,
-            sizeIds,
-            department: "womens",
+            ...atom,
+            department: "Female",
           });
         }
-      } else if (submission.value === "unisex") {
-        if (department === "unisex") {
+      } else if (submission.value === "Female") {
+        if (department === "Female") {
           resetFilter("department");
         } else {
           setSelectedFilters({
-            colorIds,
-            price,
-            sizeIds,
-            department: "unisex",
+            ...atom,
+            department: "Female",
           });
         }
       }
@@ -143,23 +130,19 @@ function MobileTabletFilters({
 
   const resetFilter = (type: "color" | "size" | "price" | "department") => {
     if (type === "color") {
-      setSelectedFilters({ colorIds: [], sizeIds, price, department });
+      setSelectedFilters({ ...atom, colorIds: [] });
     } else if (type === "size") {
-      setSelectedFilters({ colorIds, sizeIds: [], price, department });
+      setSelectedFilters({ ...atom, sizeIds: [] });
     } else if (type === "price") {
       setSelectedFilters({
-        department,
-        colorIds,
-        sizeIds,
+        ...atom,
         price: { min: 1, max: 1000 },
       });
       setPriceInputValue({ min: 1, max: 1000 });
     } else if (type === "department") {
       setSelectedFilters({
+        ...atom,
         department: undefined,
-        colorIds,
-        sizeIds,
-        price,
       });
     }
   };
@@ -167,9 +150,7 @@ function MobileTabletFilters({
   const addPriceFilter = () => {
     if (priceInputValue.min <= priceInputValue.max) {
       setSelectedFilters({
-        department,
-        colorIds,
-        sizeIds,
+        ...atom,
         price: { min: priceInputValue.min, max: priceInputValue.max },
       });
     }
@@ -190,23 +171,23 @@ function MobileTabletFilters({
         ></DepartmentDropdown>
       )}
       {showSortBy && <SortDropdown filterWidth={filterWidth}></SortDropdown>}
-      {showColorsFilter && (
+      {showColorsFilter && colorOptions.length > 0 && (
         <ColorDropdown
           addFilter={addFilter}
           resetFilter={resetFilter}
           colorIds={colorIds}
-          products={products}
+          colorOptions={colorOptions}
           filterRef={filterRef}
           filterWidth={filterWidth}
         ></ColorDropdown>
       )}
-      {showSizeFilter && (
+      {showSizeFilter && sizeOptions.length > 0 && (
         <SizeDropdown
           addFilter={addFilter}
           resetFilter={resetFilter}
           filterWidth={filterWidth}
           sizeIds={sizeIds}
-          products={products}
+          sizeOptions={sizeOptions}
         ></SizeDropdown>
       )}
       {showPriceFilter && (
