@@ -29,7 +29,7 @@ async function ProductPage({
     return (
       <>
         <ProductBreadCrumb product={product}></ProductBreadCrumb>
-        <section className="grid md:grid-cols-[52fr_48fr] gap-8 pb-8 lg:pb-12 md:w-[95vw] md:mx-auto md:max-w-[992px] items-start">
+        <section className="grid gap-8 pb-8 items-start md:grid-cols-[52fr_48fr] md:w-[95vw] md:mx-auto md:max-w-[992px] lg:pb-12 ">
           <ProductGallery product={product}></ProductGallery>
           <ProductInfo
             product={product}
