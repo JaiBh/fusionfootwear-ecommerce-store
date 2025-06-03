@@ -28,7 +28,7 @@ function MobileNav({
 
   return (
     <>
-      <div className="md:hidden flex items-center justify-between py-3 px-3 border-b-[1px]">
+      <div className="flex md:hidden items-center justify-between py-3 px-3 border-b-[1px]">
         <div className="flex items-center gap-4">
           <NavSidebar
             department={department}

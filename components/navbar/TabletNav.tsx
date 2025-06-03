@@ -27,7 +27,7 @@ function TabletNav({
 
   return (
     <>
-      <div className="max-md:hidden lg:hidden grid grid-cols-[auto_1fr_auto] gap-6 py-3 px-3 border-b-[1px]">
+      <div className="hidden md:grid lg:hidden grid-cols-[auto_1fr_auto] gap-6 py-3 px-3 border-b-[1px]">
         <div className="flex items-center gap-4">
           <NavSidebar
             toggleSidebar={() => setOpen(!open)}

@@ -29,7 +29,7 @@ function DesktopNav({
 
   return (
     <>
-      <div className="max-lg:hidden grid grid-cols-[auto_auto_1fr_auto] gap-6 px-6 max-w-[1315px] mx-auto">
+      <div className="hidden lg:grid grid-cols-[auto_auto_1fr_auto] gap-6 px-6 max-w-[1315px] mx-auto">
         <RouteLink
           className={cn(
             "flex items-center gap-2 py-3",
