@@ -27,6 +27,12 @@ export default function RootLayout({
   return (
     <ConvexAuthNextjsServerProvider>
       <html lang="en" suppressHydrationWarning>
+        <head>
+          <meta
+            name="viewport"
+            content="width=device-width,initial-scale-1"
+          ></meta>
+        </head>
         <body className={`${urbanist.className}  antialiased`}>
           <ConvexClientProvider>
             <ThemeProvider

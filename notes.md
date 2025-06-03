@@ -8,7 +8,7 @@ saved products filter
 cart dropdown
 
 Reviews
-p
+
 Include out of stock when searching
 
 shipping options
