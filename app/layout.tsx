@@ -30,7 +30,7 @@ export default function RootLayout({
         <head>
           <meta
             name="viewport"
-            content="width=device-width,initial-scale-1"
+            content="width=device-width, initial-scale=1"
           ></meta>
         </head>
         <body className={`${urbanist.className}  antialiased`}>

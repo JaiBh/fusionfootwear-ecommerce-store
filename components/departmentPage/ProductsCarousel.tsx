@@ -54,8 +54,8 @@ function ProductsCarousel({ products }: ProductsCarouselProps) {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="max-md:hidden" />
-      <CarouselNext className="max-md:hidden" />
+      <CarouselPrevious className="max-lg:hidden" />
+      <CarouselNext className="max-lg:hidden" />
     </Carousel>
   );
 }
