@@ -2,12 +2,6 @@ import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { useEffect, useState } from "react";
 
-const stuff = atomWithStorage<{
-  department: "Male" | "Female";
-}>("department", {
-  department: "Male",
-});
-
 const departmentState = atomWithStorage<"Male" | "Female">(
   "department",
   "Male"

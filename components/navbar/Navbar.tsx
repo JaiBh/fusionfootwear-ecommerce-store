@@ -31,7 +31,7 @@ function Navbar() {
     return () => {
       mounted = false;
     };
-  }, [department]);
+  }, [department, hydrate]);
 
   return (
     <nav className="z-20">
