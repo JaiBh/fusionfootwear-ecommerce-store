@@ -131,7 +131,7 @@ function ProductInfo({ product, sizes, productLine }: ProductInfoProps) {
   ]);
 
   return (
-    <div className="max-md:w-[90vw] max-md:mx-auto space-y-4">
+    <div className="w-[90vw] mx-auto space-y-4 md:w-full md:mx-0">
       <div className="space-y-4">
         <h1 className="text-present-2 md:text-present-1 flex items-center gap-2">
           {product.name}
