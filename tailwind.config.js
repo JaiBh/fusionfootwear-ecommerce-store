@@ -5,7 +5,7 @@ module.exports = {
     extend: {},
     container: {
       screens: {
-        md: "768px",
+        md: "640px",
       },
     },
   },
