@@ -150,10 +150,6 @@ body,
   }
 }
 
-@theme {
-  --breakpoint-md: 44rem;
-}
-
 @utility text-present-1 {
   @apply font-bold text-4xl leading-[120%];
 }
