@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 interface DepartmentFilterProps {
-  department: "Male" | "Female" | "Unisex" | undefined;
+  department: "mens" | "womens" | "unisex" | undefined;
   addFilter: (submission: {
     type: "department" | "size" | "color";
     value: string;
@@ -32,28 +32,28 @@ export default function DepartmentFilter({
       <Separator></Separator>
       <div className="text-present-4 flex gap-2 flex-col items-center">
         <Button
-          variant={department === "Male" ? "default" : "outline"}
+          variant={department === "mens" ? "default" : "outline"}
           className="w-full max-w-[12rem] cursor-pointer"
           onClick={() => {
-            addFilter({ type: "department", value: "Male" });
+            addFilter({ type: "department", value: "mens" });
           }}
         >
           Men's
         </Button>
         <Button
-          variant={department === "Female" ? "default" : "outline"}
+          variant={department === "womens" ? "default" : "outline"}
           className="w-full max-w-[12rem] cursor-pointer"
           onClick={() => {
-            addFilter({ type: "department", value: "Female" });
+            addFilter({ type: "department", value: "mens" });
           }}
         >
           Women's
         </Button>
         <Button
-          variant={department === "Unisex" ? "default" : "outline"}
+          variant={department === "unisex" ? "default" : "outline"}
           className="w-full max-w-[12rem] cursor-pointer"
           onClick={() => {
-            addFilter({ type: "department", value: "Unisex" });
+            addFilter({ type: "department", value: "unisex" });
           }}
         >
           Only Unisex

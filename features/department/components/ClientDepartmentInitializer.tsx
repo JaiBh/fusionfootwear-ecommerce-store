@@ -17,12 +17,12 @@ export default function ClientDepartmentInitializer({
   useEffect(() => {
     if (!hydrate) return;
     if (department === "mens") {
-      if (departmentStore !== "Male") {
-        setDepartmentAtom("Male");
+      if (departmentStore !== "mens") {
+        setDepartmentAtom("mens");
       }
     } else if (department === "womens") {
-      if (departmentStore !== "Female") {
-        setDepartmentAtom("Female");
+      if (departmentStore !== "womens") {
+        setDepartmentAtom("womens");
       }
     }
   }, [department, departmentStore, setDepartmentAtom, hydrate]);

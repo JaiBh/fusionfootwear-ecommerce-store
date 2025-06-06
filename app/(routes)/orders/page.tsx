@@ -61,9 +61,7 @@ function OrdersPage() {
             order appear here
           </p>
           <Button asChild>
-            <RouteLink href={`/${department === "Male" ? "mens" : "womens"}`}>
-              Continue Shopping
-            </RouteLink>
+            <RouteLink href={`/${department}`}>Continue Shopping</RouteLink>
           </Button>
         </div>
       </div>

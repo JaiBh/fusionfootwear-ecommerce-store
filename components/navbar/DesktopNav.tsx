@@ -18,7 +18,7 @@ function DesktopNav({
   department,
 }: {
   categories: Category[] | undefined;
-  department: "Male" | "Female";
+  department: "mens" | "womens";
 }) {
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
@@ -35,7 +35,7 @@ function DesktopNav({
             "flex items-center gap-2 py-3",
             !mounted && "cursor-not-allowed"
           )}
-          href={department === "Female" ? "/womens" : "/mens"}
+          href={`/${department}`}
         >
           <Logo></Logo>
           <h2 className="text-present-2 text-primary">FusionFootwear</h2>
@@ -45,7 +45,7 @@ function DesktopNav({
             href={"/mens"}
             className={cn(
               "p-4 bg-background transition border-l text-present-3 font-semibold",
-              mounted && department === "Male"
+              mounted && department === "mens"
                 ? "bg-primary text-white"
                 : "hover:bg-primary-10 dark:hover:bg-secondary"
             )}
@@ -56,7 +56,7 @@ function DesktopNav({
             href={"/womens"}
             className={cn(
               "p-4 bg-background transition border-r text-present-3 font-semibold",
-              mounted && department === "Female"
+              mounted && department === "womens"
                 ? "bg-primary text-white"
                 : "hover:bg-primary-10 dark:hover:bg-secondary"
             )}
@@ -85,7 +85,7 @@ function DesktopNav({
               categories.map((category) => (
                 <RouteLink
                   key={category.id}
-                  href={`/${department === "Female" ? "womens" : "mens"}/${category.id}`}
+                  href={`/${department}/${category.id}`}
                   className={cn(
                     "block p-4 text-present-4 transition hover:bg-primary hover:text-white",
                     pathname.includes(category.id) &&

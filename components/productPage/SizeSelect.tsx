@@ -31,12 +31,12 @@ function SizeSelect({
   const { department } = useDepartmentAtom();
   const [mounted, setMounted] = useState(false);
   const sizeOptions =
-    department === "Male"
+    department === "mens"
       ? sizes.filter(
-          (size) => size.department === "Male" || size.department === "Unisex"
+          (size) => size.department === "mens" || size.department === "unisex"
         )
       : sizes.filter(
-          (size) => size.department === "Female" || size.department === "Unisex"
+          (size) => size.department === "womens" || size.department === "unisex"
         );
   const formattedSizes = sizeOptions
     .sort((a, b) => Number(a.name) - Number(b.name))

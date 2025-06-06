@@ -125,9 +125,7 @@ function CartPage() {
           <h2 className="text-present-2">Your cart is empty</h2>
           <p>Browse the store and add items to your cart.</p>
           <Button variant={"default"} className="w-full cursor-pointer" asChild>
-            <RouteLink href={`/${department === "Female" ? "womens" : "mens"}`}>
-              Continue Shopping
-            </RouteLink>
+            <RouteLink href={`/${department}`}>Continue Shopping</RouteLink>
           </Button>
         </div>
       </div>

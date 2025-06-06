@@ -87,7 +87,7 @@ function ProductInfo({ product, sizes, productLine }: ProductInfoProps) {
   };
 
   useEffect(() => {
-    if (product.department !== "Unisex") {
+    if (product.department !== "unisex") {
       if (product.department !== department) {
         setDepartmentAtom(product.department);
       }

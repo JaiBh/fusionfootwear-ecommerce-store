@@ -73,7 +73,7 @@ async function CategoryPage({
           <section className="max-lg:w-[90vw] max-lg:max-w-[1315px] max-lg:mx-auto">
             <ProductsList
               categoryId={categoryId}
-              department={department === "mens" ? "Male" : "Female"}
+              department={department}
             ></ProductsList>
           </section>
         </div>

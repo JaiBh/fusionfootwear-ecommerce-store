@@ -12,10 +12,10 @@ function ProductBreadCrumb({ product }: ProductBreadCrumbProps) {
   const { department } = useDepartmentAtom();
 
   const navigationLinks = [
-    { text: "Home", href: `/${department === "Male" ? "mens" : "womens"}` },
+    { text: "Home", href: `/${department}` },
     {
       text: product.category.name,
-      href: `/${department === "Male" ? "mens" : "womens"}/${product.category.id}`,
+      href: `/${department}/${product.category.id}`,
     },
     {
       text: product.name,

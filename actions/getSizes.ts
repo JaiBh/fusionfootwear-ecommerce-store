@@ -2,7 +2,7 @@ import { Size } from "@/types";
 import qs from "query-string";
 
 interface Query {
-  department?: "Male" | "Female";
+  department?: "mens" | "womens";
 }
 
 const URL = `${process.env.NEXT_PUBLIC_API_URL}/sizes`;

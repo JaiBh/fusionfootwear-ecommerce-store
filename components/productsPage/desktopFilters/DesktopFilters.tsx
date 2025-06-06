@@ -76,31 +76,31 @@ function DesktopFilters({
         });
       }
     } else if (submission.type === "department") {
-      if (submission.value === "Male") {
-        if (department === "Male") {
+      if (submission.value === "mens") {
+        if (department === "mens") {
           resetFilter("department");
         } else {
           setSelectedFilters({
             ...atom,
-            department: "Male",
+            department: "mens",
           });
         }
-      } else if (submission.value === "Female") {
-        if (department === "Female") {
+      } else if (submission.value === "womens") {
+        if (department === "womens") {
           resetFilter("department");
         } else {
           setSelectedFilters({
             ...atom,
-            department: "Female",
+            department: "womens",
           });
         }
-      } else if (submission.value === "Unisex") {
-        if (department === "Unisex") {
+      } else if (submission.value === "unisex") {
+        if (department === "unisex") {
           resetFilter("department");
         } else {
           setSelectedFilters({
             ...atom,
-            department: "Unisex",
+            department: "unisex",
           });
         }
       }

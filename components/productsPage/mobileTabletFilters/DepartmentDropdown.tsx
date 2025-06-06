@@ -18,7 +18,7 @@ interface DepartmentDropdownProps {
     type: "size" | "color" | "department";
     value: string;
   }) => void;
-  department: "Male" | "Female" | "Unisex" | undefined;
+  department: "mens" | "womens" | "unisex" | undefined;
   resetFilter: (type: "color" | "size" | "price" | "department") => void;
 }
 
@@ -54,33 +54,33 @@ function DepartmentDropdown({
         <DropdownMenuGroup>
           <DropdownMenuItem
             className={cn(
-              department === "Male" &&
+              department === "mens" &&
                 "bg-primary text-white hover:!bg-primary hover:!text-white"
             )}
             onClick={() => {
-              addFilter({ type: "department", value: "Male" });
+              addFilter({ type: "department", value: "mens" });
             }}
           >
             Men's
           </DropdownMenuItem>
           <DropdownMenuItem
             className={cn(
-              department === "Female" &&
+              department === "womens" &&
                 "bg-primary text-white hover:!bg-primary hover:!text-white"
             )}
             onClick={() => {
-              addFilter({ type: "department", value: "Female" });
+              addFilter({ type: "department", value: "womens" });
             }}
           >
             Women's
           </DropdownMenuItem>
           <DropdownMenuItem
             className={cn(
-              department === "Unisex" &&
+              department === "unisex" &&
                 "bg-primary text-white hover:!bg-primary hover:!text-white"
             )}
             onClick={() => {
-              addFilter({ type: "department", value: "Unisex" });
+              addFilter({ type: "department", value: "unisex" });
             }}
           >
             Only Unisex

@@ -16,7 +16,7 @@ export interface Product {
   name: string;
   price: string;
   desc: string;
-  department: "Male" | "Female" | "Unisex";
+  department: "mens" | "womens" | "unisex";
   isFeatured: boolean;
   isArchived: boolean;
   productLineId: string;

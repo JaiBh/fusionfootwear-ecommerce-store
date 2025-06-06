@@ -2,7 +2,7 @@ import { Color, Product } from "@/types";
 import qs from "query-string";
 
 interface Query {
-  department?: "Male" | "Female" | "Unisex" | undefined;
+  department?: "mens" | "womens" | "unisex" | undefined;
   categoryId?: string;
   colorIds?: string[];
   sizeIds?: string[];

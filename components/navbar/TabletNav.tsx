@@ -16,7 +16,7 @@ function TabletNav({
   department,
 }: {
   categories: Category[] | undefined;
-  department: "Male" | "Female";
+  department: "mens" | "womens";
 }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -39,7 +39,7 @@ function TabletNav({
               "flex items-center gap-2",
               !mounted && "cursor-not-allowed"
             )}
-            href={department === "Female" ? "/womens" : "/mens"}
+            href={`/${department}`}
           >
             <Logo></Logo>
             <h2 className="text-present-2 text-primary">FusionFootwear</h2>

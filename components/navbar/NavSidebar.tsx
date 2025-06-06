@@ -36,7 +36,7 @@ import { toast } from "sonner";
 interface NavSidebarProps {
   toggleSidebar: () => void;
   categories: Category[] | undefined;
-  department: "Male" | "Female";
+  department: "mens" | "womens";
 }
 
 function NavSidebar({
@@ -76,7 +76,7 @@ function NavSidebar({
                 href={"/mens"}
                 className={cn(
                   "block border-b-[3px] py-4 bg-card opacity-70 transition",
-                  department === "Male"
+                  department === "mens"
                     ? " border-b-primary text-primary opacity-100"
                     : "hover:border-b-primary-80 hover:text-primary-80"
                 )}
@@ -89,7 +89,7 @@ function NavSidebar({
                 href={"/womens"}
                 className={cn(
                   "block border-b-[3px] py-4 bg-card opacity-70 transition",
-                  department === "Female"
+                  department === "womens"
                     ? "border-b-primary text-primary opacity-100"
                     : "hover:border-b-primary-80 hover:text-primary-80"
                 )}
@@ -133,7 +133,7 @@ function NavSidebar({
                 <SidebarLink
                   onClick={toggleSidebar}
                   text={"Home"}
-                  href={department === "Female" ? "/womens" : "/mens"}
+                  href={`/${department}`}
                   setOpen={setOpen}
                 ></SidebarLink>
                 {categories?.map((category) => (
@@ -141,7 +141,7 @@ function NavSidebar({
                     onClick={toggleSidebar}
                     key={category.id}
                     text={category.name}
-                    href={`/${department === "Male" ? "mens" : "womens"}/${category.id}`}
+                    href={`/${department}/${category.id}`}
                     setOpen={setOpen}
                   ></SidebarLink>
                 ))}

@@ -16,7 +16,7 @@ function MobileNav({
   department,
 }: {
   categories: Category[] | undefined;
-  department: "Male" | "Female";
+  department: "mens" | "womens";
 }) {
   const [open, setOpen] = useState(false);
 
@@ -37,7 +37,7 @@ function MobileNav({
           ></NavSidebar>
 
           <RouteLink
-            href={department === "Female" ? "/womens" : "/mens"}
+            href={`/${department}`}
             className={cn(
               "flex items-center",
               !mounted && "cursor-not-allowed"

@@ -7,7 +7,7 @@ const selectedFiltersState = atom<{
   colorIds: string[];
   sizeIds: string[];
   price: { min: number; max: number };
-  department: "Male" | "Female" | "Unisex" | undefined;
+  department: "mens" | "womens" | "unisex" | undefined;
   sortBy: "a-z" | "z-a" | "price-high-to-low" | "price-low-to-high" | undefined;
 }>({
   colorOptions: [],

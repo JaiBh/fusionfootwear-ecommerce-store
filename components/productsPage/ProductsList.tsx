@@ -16,7 +16,7 @@ import { Skeleton } from "../ui/skeleton";
 interface ProductsListProps {
   categoryId?: string;
   searchEnabled?: boolean;
-  department?: "Male" | "Female";
+  department?: "mens" | "womens";
 }
 
 function ProductsList({ categoryId, department }: ProductsListProps) {
