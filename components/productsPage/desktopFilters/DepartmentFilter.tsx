@@ -44,7 +44,7 @@ export default function DepartmentFilter({
           variant={department === "womens" ? "default" : "outline"}
           className="w-full max-w-[12rem] cursor-pointer"
           onClick={() => {
-            addFilter({ type: "department", value: "mens" });
+            addFilter({ type: "department", value: "womens" });
           }}
         >
           Women's
