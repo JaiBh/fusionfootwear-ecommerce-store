@@ -55,7 +55,7 @@ function ContactPage() {
 
   return (
     <div className="h-full flex items-center justify-center py-[50px]">
-      <div className="w-[90vw] max-w-[640px] bg-secondary px-6 py-8 space-y-6 rounded-2xl">
+      <div className="w-[90vw] max-w-[640px] bg-primary-20 dark:bg-secondary px-6 py-8 space-y-6 rounded-2xl">
         <h1 className="text-present-2 text-center">Contact Us</h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
@@ -66,7 +66,12 @@ function ContactPage() {
                 <FormItem>
                   <FormLabel>Full Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="John Smith" {...field} maxLength={50} />
+                    <Input
+                      placeholder="John Smith"
+                      {...field}
+                      maxLength={50}
+                      className="not-dark:bg-white"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -84,6 +89,7 @@ function ContactPage() {
                       type="email"
                       maxLength={254}
                       {...field}
+                      className="not-dark:bg-white"
                     />
                   </FormControl>
                   <FormMessage />
@@ -98,7 +104,11 @@ function ContactPage() {
                 <FormItem>
                   <FormLabel>Title</FormLabel>
                   <FormControl>
-                    <Input {...field} maxLength={100} />
+                    <Input
+                      {...field}
+                      maxLength={100}
+                      className="not-dark:bg-white"
+                    />
                   </FormControl>
                   <FormDescription>
                     A brief summary of the query.
@@ -116,7 +126,7 @@ function ContactPage() {
                   <FormControl>
                     <Textarea
                       {...field}
-                      className="min-h-[80px]"
+                      className="min-h-[80px] not-dark:bg-white"
                       maxLength={2000}
                     />
                   </FormControl>
