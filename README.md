@@ -64,6 +64,7 @@ npm run dev
 ```
 /app              # Next.js App Router
 /components       # UI and shared components
+/actions/         # Server actions
 /lib              # Utilities and helpers
 /prisma           # Prisma schema and client
 /public           # Static assets
