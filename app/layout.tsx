@@ -12,8 +12,9 @@ const urbanist = Urbanist({
 });
 
 export const metadata = {
-  title: "FusionFootwear",
-  description: "Sporty, stylish footwear that move with you.",
+  title: "FusionFootwear | Modern E-commerce for Footwear",
+  description:
+    "FusionFootwear is a sleek, responsive e-commerce store for stylish and performance-driven footwear. Built with Next.js, Tailwind CSS, and Stripe integration.",
   icons: {
     icon: "/favicon.ico",
   },
