@@ -9,7 +9,7 @@ A modern, full-stack e-commerce store for a fictional footwear brand — **Fusio
 
 ## 🧰 Tech Stack
 
-- **Framework**: [Next.js 14 (App Router)](https://nextjs.org/)
+- **Framework**: [Next.js 15 (App Router)](https://nextjs.org/)
 - **Frontend**: [React](https://react.dev/), [Tailwind CSS](https://tailwindcss.com/)
 - **UI Components**: [ShadCN UI](https://ui.shadcn.com/)
 - **Type Safety**: TypeScript
