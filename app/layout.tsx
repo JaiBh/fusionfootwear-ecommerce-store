@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 import Modals from "@/components/global/modals/Modals";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import LoadingClientWrapper from "@/components/global/LoadingClientWrapper";
+import ReactQueryProvider from "./providers/ReactQueryProvider";
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -35,19 +36,21 @@ export default function RootLayout({
           ></meta>
         </head>
         <body className={`${urbanist.className}  antialiased`}>
-          <ConvexClientProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              enableColorScheme
-              disableTransitionOnChange
-            >
-              <LoadingClientWrapper>{children}</LoadingClientWrapper>
-              <Toaster position="top-center"></Toaster>
-              <Modals></Modals>
-            </ThemeProvider>
-          </ConvexClientProvider>
+          <ReactQueryProvider>
+            <ConvexClientProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                enableColorScheme
+                disableTransitionOnChange
+              >
+                <LoadingClientWrapper>{children}</LoadingClientWrapper>
+                <Toaster position="top-center"></Toaster>
+                <Modals></Modals>
+              </ThemeProvider>
+            </ConvexClientProvider>
+          </ReactQueryProvider>
         </body>
       </html>
     </ConvexAuthNextjsServerProvider>
