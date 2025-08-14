@@ -12,34 +12,35 @@ import {
 } from "@/components/ui/carousel";
 import { Button } from "../ui/button";
 import { useDepartmentAtom } from "@/features/department/store/useDepartmentAtom";
-import getProducts from "@/actions/getProducts";
 import { Skeleton } from "../ui/skeleton";
+import { useFeaturedProducts } from "@/hooks/useFeaturedProducts";
+import { toast } from "sonner";
 
 interface FeaturedProductsProps {
   filterDepartment?: boolean;
 }
 
 function FeaturedProducts({ filterDepartment }: FeaturedProductsProps) {
+  const { featuredProducts, status } = useFeaturedProducts();
   const [category, setCategory] = useState<string>("All");
   const [categories, setCategories] = useState<string[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
   const { department, hydrate } = useDepartmentAtom();
 
   useEffect(() => {
     if (!hydrate) return;
     let mounted = true;
-    const fetchProducts = async () => {
-      setLoading(true);
+    const getProducts = async () => {
+      const items = filterDepartment
+        ? featuredProducts.filter(
+            (item) =>
+              item.department === "unisex" || item.department === department
+          )
+        : featuredProducts;
       try {
-        const resp = await getProducts({
-          department: filterDepartment ? department : undefined,
-          isArchived: false,
-          isFeatured: true,
-        });
         const categoriesWithFeaturedProducts: string[] = [];
 
-        resp.products.forEach((product) => {
+        items.forEach((product) => {
           if (categoriesWithFeaturedProducts.includes(product.category.name)) {
             return;
           } else {
@@ -47,30 +48,25 @@ function FeaturedProducts({ filterDepartment }: FeaturedProductsProps) {
           }
         });
         if (mounted) {
-          setProducts(resp.products);
+          setProducts(items);
           setCategories(["All", ...categoriesWithFeaturedProducts]);
         }
       } catch (err) {
         console.log("Error when fetching featured products", err);
-      } finally {
-        if (mounted) {
-          setLoading(false);
-        }
       }
     };
-    fetchProducts();
+    if (status !== "pending") {
+      getProducts();
+    }
     return () => {
       mounted = false;
     };
-  }, [department, filterDepartment, hydrate]);
-
-  // if (!loading && categories.length < 1) return null;
-  // if (!loading && products.length < 1) return null;
+  }, [department, filterDepartment, hydrate, featuredProducts]);
 
   return (
     <div className="space-y-6">
       <h2 className="text-present-2">Featured Products</h2>
-      {loading ? (
+      {status === "pending" ? (
         <FeaturedProductsLoader></FeaturedProductsLoader>
       ) : (
         <>
