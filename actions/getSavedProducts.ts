@@ -2,7 +2,10 @@ import { SavedProduct } from "@/types";
 import qs from "query-string";
 
 const URL = `${process.env.NEXT_PUBLIC_API_URL}/savedProducts`;
-const getSavedProducts = async (userId: string): Promise<SavedProduct[]> => {
+const getSavedProducts = async (userId?: string): Promise<SavedProduct[]> => {
+  if (!userId) {
+    return [];
+  }
   const url = qs.stringifyUrl({
     url: URL,
     query: {

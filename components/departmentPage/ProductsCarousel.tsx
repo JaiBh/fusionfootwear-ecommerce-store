@@ -47,7 +47,7 @@ function ProductsCarousel({ products }: ProductsCarouselProps) {
                       ${Number(product.price).toFixed(2)}
                     </span>
                   </div>
-                  <ToggleSaveButton productId={product.id}></ToggleSaveButton>
+                  <ToggleSaveButton product={product}></ToggleSaveButton>
                 </div>
               </div>
             </RouteLink>

@@ -41,7 +41,7 @@ function ProductCard({
             </div>
           )}
           <ToggleSaveButton
-            productId={product.id}
+            product={product}
             className="absolute bottom-[1rem] right-[1rem] bg-white group"
           ></ToggleSaveButton>
         </CardHeader>

@@ -1,10 +1,11 @@
+import { Product } from "@/types";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
 const savedProductsState = atomWithStorage<{
-  localSavedProductsIds: string[];
+  localSavedProducts: Product[];
 }>("saved-products", {
-  localSavedProductsIds: [],
+  localSavedProducts: [],
 });
 
 export const useLocalSavedProductsAtom = () => {

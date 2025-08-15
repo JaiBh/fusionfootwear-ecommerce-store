@@ -1,80 +1,41 @@
 "use client";
 
 import { useGetUser } from "@/features/auth/api/useGetUser";
-import { useLocalSavedProductsAtom } from "@/features/saved/store/useLocalSavedProductsAtom";
-import isSavedProduct from "@/actions/isSavedProduct";
-import useToggleSaveProduct from "@/hooks/useToggleSaveProduct";
 import { cn } from "@/lib/utils";
 import { Heart } from "lucide-react";
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { useSaved } from "@/hooks/useSaved";
+import { Product } from "@/types";
 
 interface ToggleSaveButtonProps {
-  productId: string;
+  product: Product;
   className?: string;
 }
 
-function ToggleSaveButton({ productId, className }: ToggleSaveButtonProps) {
-  const [{ localSavedProductsIds }] = useLocalSavedProductsAtom();
-  const [isSaved, setIsSaved] = useState(
-    localSavedProductsIds.includes(productId)
-  );
+function ToggleSaveButton({ product, className }: ToggleSaveButtonProps) {
   const { data: user, isLoading: userIsLoading } = useGetUser();
-
-  const { toggleSaveProduct, saveProductLoading } = useToggleSaveProduct(
-    productId,
-    isSaved
-  );
+  const { savedProducts, toggleSave, isLoading } = useSaved();
+  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    if (userIsLoading) return;
-    let mounted = true;
-
-    const init = async () => {
-      try {
-        const saved = await isSavedProduct({
-          productId: productId,
-          user,
-          localSavedProductsIds,
-        });
-        if (!mounted) return;
-        setIsSaved(saved);
-      } catch (err) {
-        console.log("Error checking if product is saved.", err);
-      } finally {
-        if (!mounted) return;
-      }
-    };
-    init();
-    return () => {
-      mounted = false;
-    };
-  }, [userIsLoading, productId, user, localSavedProductsIds]);
+    setSaved(savedProducts.some((item) => item.id === product.id));
+  }, [savedProducts]);
   return (
     <button
       className={cn(
         "bg-secondary dark:bg-white/90 p-2 rounded-[50%] cursor-pointer group",
         className
       )}
-      disabled={saveProductLoading}
       onClick={async (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        if (saveProductLoading) return;
-
-        const prev = isSaved;
-        setIsSaved(!prev);
-        try {
-          await toggleSaveProduct();
-        } catch {
-          setIsSaved(prev);
-          //   error dealt with in toggleSaveProduct()
-        }
+        toggleSave.mutate(product);
       }}
     >
-      {saveProductLoading ? (
+      {userIsLoading || (user && isLoading) ? (
         <motion.div
           className="max-md:size-4 size-5 border-4 border-t-transparent border-blue-500 rounded-full"
           animate={{ rotate: 360 }}
@@ -84,7 +45,7 @@ function ToggleSaveButton({ productId, className }: ToggleSaveButtonProps) {
             duration: 1,
           }}
         />
-      ) : isSaved ? (
+      ) : saved ? (
         <FaHeart className="text-destructive max-md:size-4 size-5"></FaHeart>
       ) : (
         <Heart className="dark:text-black group-hover:text-destructive transition group-hover:scale-[1.1] max-md:size-4 size-5"></Heart>

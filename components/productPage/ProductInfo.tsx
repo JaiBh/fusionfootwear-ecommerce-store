@@ -177,7 +177,7 @@ function ProductInfo({ product, sizes, productLine }: ProductInfoProps) {
           >
             {outOfStock ? "Out of Stock" : "Add To Cart"}
           </Button>
-          <ToggleSaveButton productId={product.id}></ToggleSaveButton>
+          <ToggleSaveButton product={product}></ToggleSaveButton>
         </div>
         <div className="space-y-4">
           <h4 className="text-present-4-bold">Description</h4>
