@@ -1,17 +1,16 @@
 "use client";
 
 import getProducts from "@/actions/getProducts";
+import getSizes from "@/actions/getSizes";
 import { useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelectedFiltersAtom } from "@/features/products/store/useSelectedFiltersAtom";
-import FullScreenLoading from "../global/FullScreenLoading";
 import { toast } from "sonner";
 import ProductCard from "./ProductCard";
-import getSizes from "@/actions/getSizes";
 import { Button } from "../ui/button";
-import { Product } from "@/types";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "../ui/skeleton";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 interface ProductsListProps {
   categoryId?: string;
@@ -19,112 +18,120 @@ interface ProductsListProps {
   department?: "mens" | "womens";
 }
 
-function ProductsList({ categoryId, department }: ProductsListProps) {
-  const searchparams = useSearchParams();
-  const searchTerm = searchparams.get("search") || undefined;
+export default function ProductsList({
+  categoryId,
+  department,
+}: ProductsListProps) {
+  const searchParams = useSearchParams();
+  const searchTerm = searchParams.get("search") || undefined;
+  const [productHover, setProductHover] = useState("");
 
   const [atom, setSelectedFilters] = useSelectedFiltersAtom();
-
   const {
     colorIds,
     sizeIds,
     price,
     department: departmentFilter,
-    colorOptions,
     sortBy,
+    colorOptions,
   } = atom;
-  const [products, setProducts] = useState<Product[]>([]);
-  const [nextCursor, setNextCursor] = useState<undefined | string>(undefined);
-  const [productHover, setProductHover] = useState("");
-  const [totalCount, setTotalCount] = useState<number>(0);
-  const [loading, setLoading] = useState(true);
-  const hasInitializedFilters = useRef(false);
-  const fetchProducts = async ({
-    products,
-    nextCursor,
-  }: {
-    products: Product[];
-    nextCursor: string | undefined;
-  }) => {
-    setLoading(true);
 
-    try {
-      hasInitializedFilters.current = false;
-      const previousProducts = products;
-      const productsResp = await getProducts({
-        isArchived: false,
-        department: department || departmentFilter,
-        categoryId,
-        minPrice: price.min,
-        maxPrice: price.max,
-        sortBy,
-        colorIds,
-        sizeIds,
-        searchTerm,
-        paginate: true,
-        take: 6,
-        cursor: nextCursor,
-      });
-      setProducts([...previousProducts, ...productsResp.products]);
-      setTotalCount(productsResp.totalCount);
-      setNextCursor(productsResp.nextCursor);
-      if (colorOptions.length < 1) {
-        setSelectedFilters({
-          ...atom,
-          colorOptions: productsResp.distinctColors,
-        });
-      }
-    } catch (err) {
-      console.log(err);
-      toast.error("Something went wrong");
-    } finally {
-      setLoading(false);
-      hasInitializedFilters.current = true;
-    }
-  };
+  // 1) Sizes via useQuery (populate sizeOptions and reset filters on search changes)
+  const sizesQuery = useQuery({
+    queryKey: ["sizes", department],
+    queryFn: () => getSizes({ department }),
+    staleTime: 10 * 60 * 1000,
+  });
 
+  // Reset filter defaults when searchTerm changes or sizes load
   useEffect(() => {
-    const init = async () => {
-      hasInitializedFilters.current = false;
+    if (!sizesQuery.data) return;
+    setSelectedFilters({
+      sizeOptions: sizesQuery.data,
+      colorOptions: [],
+      colorIds: [],
+      sizeIds: [],
+      price: { min: 1, max: 1000 },
+      department: undefined,
+      sortBy: undefined,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTerm, sizesQuery.data]);
 
+  const params = useMemo(
+    () => ({
+      isArchived: false,
+      department: department || departmentFilter,
+      categoryId,
+      minPrice: price.min,
+      maxPrice: price.max,
+      sortBy,
+      colorIds,
+      sizeIds,
+      searchTerm,
+      paginate: true,
+      take: 6,
+    }),
+    [
+      department,
+      departmentFilter,
+      categoryId,
+      price.min,
+      price.max,
+      sortBy,
+      colorIds,
+      sizeIds,
+      searchTerm,
+    ]
+  );
+
+  // 2) Products via useInfiniteQuery with cursor pagination
+  const {
+    data,
+    error,
+    isLoading,
+    isFetching,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    refetch,
+  } = useInfiniteQuery({
+    queryKey: ["products", params],
+    enabled: sizesQuery.status === "success", // wait for filter defaults
+    initialPageParam: undefined as string | undefined,
+    queryFn: async ({ pageParam }) => {
       try {
-        const sizes = await getSizes({ department });
-        setSelectedFilters({
-          sizeOptions: sizes,
-          colorOptions: [],
-          colorIds: [],
-          sizeIds: [],
-          price: { min: 1, max: 1000 },
-          department: undefined,
-          sortBy: undefined,
-        });
-        hasInitializedFilters.current = true;
-      } catch (err) {
-        console.log("Error fetching sizes", err);
+        const res = await getProducts({ ...params, cursor: pageParam });
+        return res;
+      } catch (e) {
+        toast.error("Failed to load products");
+        throw e;
       }
-    };
-    init();
-  }, [searchTerm]);
+    },
+    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
+    // Keep old data while filters change slightly so UI does not flash
+    placeholderData: (previous) => previous,
+  });
 
+  // Put distinctColors into atom once
   useEffect(() => {
-    if (!hasInitializedFilters.current) return;
-    let mounted = true;
-    const init = async () => {
-      setProducts([]);
-      setNextCursor(undefined);
-      setTotalCount(0);
-      if (mounted) {
-        await fetchProducts({ products: [], nextCursor: undefined });
-      }
-    };
-    init();
+    const first = data?.pages?.[0];
+    if (!first) return;
+    if ((colorOptions?.length || 0) < 1 && first.distinctColors?.length > 0) {
+      setSelectedFilters((prev) => ({
+        ...prev,
+        colorOptions: first.distinctColors,
+      }));
+    }
+  }, [data, colorOptions?.length, setSelectedFilters]);
 
-    return () => {
-      mounted = false;
-    };
-  }, [searchTerm, departmentFilter, colorIds, sizeIds, price, sortBy]);
+  const products = useMemo(
+    () => data?.pages.flatMap((p) => p.products) ?? [],
+    [data]
+  );
+  const totalCount = data?.pages?.[0]?.totalCount ?? 0;
 
-  if (products?.length < 1 && !loading) {
+  if (!isLoading && products.length < 1) {
     return (
       <div className="space-y-10">
         <h1 className="text-present-3-bold lg:text-present-2 uppercase">
@@ -133,38 +140,54 @@ function ProductsList({ categoryId, department }: ProductsListProps) {
       </div>
     );
   }
+
   return (
     <div className="space-y-4">
       <h2 className="text-present-2">
         Showing {products.length} of {totalCount} products found
       </h2>
+
       <div className="grid grid-cols-2 gap-1 md:grid-cols-3 auto-rows-fr">
-        {loading ? (
-          <ProductsListLoader></ProductsListLoader>
+        {isLoading ? (
+          <ProductsListLoader />
         ) : (
-          products?.map((product) => (
+          products.map((product) => (
             <ProductCard
               key={product.id}
               product={product}
               productHover={productHover}
               setProductHover={setProductHover}
               searchTerm={searchTerm}
-            ></ProductCard>
+            />
           ))
         )}
       </div>
+
       <Button
-        className={cn("block mx-auto mt-8", !nextCursor && "hidden")}
-        onClick={() => {
-          fetchProducts({ products, nextCursor });
-        }}
+        className={cn("block mx-auto mt-8", !hasNextPage && "hidden")}
+        onClick={() => fetchNextPage()}
+        disabled={isFetchingNextPage}
       >
-        Load More
+        {isFetchingNextPage ? "Loading..." : "Load More"}
       </Button>
+
+      {/* Optional subtle refetch indicator */}
+      {isFetching && !isFetchingNextPage && (
+        <p className="text-xs text-muted-foreground text-center">
+          Refreshing...
+        </p>
+      )}
+      {error && (
+        <div className="text-red-600 text-sm text-center">
+          Something went wrong.{" "}
+          <button className="underline" onClick={() => refetch()}>
+            Try again
+          </button>
+        </div>
+      )}
     </div>
   );
 }
-export default ProductsList;
 
 function ProductsListLoader() {
   const times = 6;
@@ -172,14 +195,12 @@ function ProductsListLoader() {
     <>
       {Array(times)
         .fill(null)
-        .map((_, index) => {
-          return (
-            <div key={index}>
-              <Skeleton className="aspect-square rounded-b-none"></Skeleton>
-              <Skeleton className="h-12 rounded-t-none"></Skeleton>
-            </div>
-          );
-        })}
+        .map((_, i) => (
+          <div key={i}>
+            <Skeleton className="aspect-square rounded-b-none" />
+            <Skeleton className="h-12 rounded-t-none" />
+          </div>
+        ))}
     </>
   );
 }

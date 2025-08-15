@@ -4,41 +4,44 @@ import { useDepartmentAtom } from "@/features/department/store/useDepartmentAtom
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
 import TabletNav from "./TabletNav";
-import { useEffect, useState } from "react";
 import { Category } from "@/types";
 import getCategories from "@/actions/getCategories";
+import { useQuery } from "@tanstack/react-query";
 
 function Navbar() {
   const { department, hydrate } = useDepartmentAtom();
 
-  const [categories, setCategories] = useState<Category[]>();
+  const {
+    data: categories = [],
+    isLoading,
+    isFetching,
+    isError,
+    error,
+  } = useQuery<Category[]>({
+    queryKey: ["categories", department],
+    queryFn: () =>
+      getCategories({
+        department,
+        isArchived: false,
+      }),
+    enabled: hydrate && !!department, // wait for atom hydration
+    staleTime: 5 * 60 * 1000, // cache for 5 min
+    gcTime: 30 * 60 * 1000,
+    placeholderData: (prev) => prev ?? [], // keep previous while refetching
+    retry: 1,
+  });
 
-  useEffect(() => {
-    if (!hydrate) return;
-    let mounted = true;
-
-    const fetchCategories = async () => {
-      try {
-        const res = await getCategories({ department, isArchived: false });
-        if (mounted) {
-          setCategories(res);
-        }
-      } catch (err) {
-        console.log("Error fetching categories", err);
-      }
-    };
-    fetchCategories();
-    return () => {
-      mounted = false;
-    };
-  }, [department, hydrate]);
+  if (isError) {
+    console.log("Error fetching categories", error);
+  }
 
   return (
     <nav className="z-20">
-      <MobileNav categories={categories} department={department}></MobileNav>
-      <TabletNav categories={categories} department={department}></TabletNav>
-      <DesktopNav categories={categories} department={department}></DesktopNav>
+      <MobileNav categories={categories} department={department} />
+      <TabletNav categories={categories} department={department} />
+      <DesktopNav categories={categories} department={department} />
     </nav>
   );
 }
+
 export default Navbar;

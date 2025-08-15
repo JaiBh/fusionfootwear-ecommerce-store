@@ -22,7 +22,7 @@ interface ProductInfoProps {
 
 function ProductInfo({ product, sizes, productLine }: ProductInfoProps) {
   const { data: user, isLoading: userIsLoading } = useGetUser();
-  const [{ localSavedProductsIds }] = useLocalSavedProductsAtom();
+  const [{ localSavedProducts }] = useLocalSavedProductsAtom();
   const [cartItems, setCartItems] = useCartAtom();
   const { department, setDepartmentAtom } = useDepartmentAtom();
 
@@ -124,7 +124,7 @@ function ProductInfo({ product, sizes, productLine }: ProductInfoProps) {
     user,
     userIsLoading,
     product.id,
-    localSavedProductsIds,
+    localSavedProducts,
     department,
     product.department,
     setDepartmentAtom,
