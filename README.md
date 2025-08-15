@@ -14,6 +14,7 @@ A modern, full-stack e-commerce store for a fictional footwear brand — **Fusio
 - **UI Components**: [ShadCN UI](https://ui.shadcn.com/)
 - **Type Safety**: TypeScript
 - **Authentication**: [Convex](https://www.convex.dev/)
+- **Data Fetching & Server State**: [TanStack React Query](https://tanstack.com/query/latest)
 - **Payments**: [Stripe (Test Mode)](https://stripe.com/)
 - **Backend**: Next.js API Routes
 - **Database**: PostgreSQL via [Prisma ORM](https://www.prisma.io/)
@@ -29,6 +30,9 @@ A modern, full-stack e-commerce store for a fictional footwear brand — **Fusio
 - 🔐 Secure user authentication (login/signup) with Convex
 - 🧾 Fully functional Stripe checkout (test mode — no real charges)
 - 🗂️ Admin dashboard integration ready (via separate project)
+
+* ⚡ Server state management with TanStack React Query for categories, featured products, products list, and user saved items
+
 - 💬 _Coming soon_: AI shopping assistant widget for smarter UX
 
 ---
